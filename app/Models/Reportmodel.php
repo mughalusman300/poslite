@@ -23,6 +23,7 @@ class Reportmodel extends Model {
     public function getSalesReportByDateDetail($date) {
         $builder = $this->db->table('saimtech_sales');
         $builder->join('saimtech_saletrans', 'saimtech_saletrans.sale_id = saimtech_sales.sale_id', 'inner');
+        $builder->join('saimtech_items', 'saimtech_items.itemsId = saimtech_saletrans.item_id', 'inner');
         $builder->where('DATE(invoice_date)', $date);
         $query = $builder->get();
         // ddd($this->db->getLastQuery()->getQuery()); 

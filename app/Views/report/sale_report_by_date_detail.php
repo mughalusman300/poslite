@@ -23,7 +23,8 @@
                     <tr>
                         <th>#</th>
                         <th>Invoice code</th>
-                        <th>Item Name</th>
+                        <th>Item</th>
+                        <th>Category</th>
                         <th>Purchase Unit Price</th>
                         <th>Sale Unit Price</th>
                         <th>Quantity</th>
@@ -40,12 +41,9 @@
                         <?php foreach ($report_data as $row) { ?>
                             <tr>
                                 <td><?= $i ?></td>
-                                <td>
-                                    <?= $row->invoice_code ?>
-                                </td>
-                                <td>
-                                    <?= $row->item_name ?>        
-                                </td>
+                                <td> <?= $row->invoice_code ?> </td>
+                                <td> <?= $row->item_name ?> </td>
+                                <td> <?= $row->itemCategory ?> </td>
                                 <td>
                                     <?= $row->purch_price ?>
                                     <?php $total_purch_price += $row->purch_price; ?>          
@@ -73,7 +71,7 @@
                             </tr>
                         <?php $i++; }?>
                             <tr>
-                                <td colspan="4" ></td>
+                                <td colspan="5" ></td>
                                 <td> <b>Grand Total </b></td>
                                 <td> <b><?= $total_quantity ?></b></td>
                                 <td> <b>PKR <?= $total_discount ?></b></td>
