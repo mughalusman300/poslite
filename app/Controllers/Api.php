@@ -142,20 +142,21 @@ class Api extends BaseController
                             $sale_item['quantity'] = $line->qty;
                             $sale_item['discount'] = $line->disc;
                             $sale_item['net_price'] = $line->net;
+                            $sale_item['sale_id'] = $sale_id;
 
                             $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $line->itemId)), 'saimtech_items');
                             if ($item) {
                                 $sale_item['purch_price'] = $item->purchasePrice;
                             }
 
-                            $this->Commonmodel->insert_record($sale_header, 'saimtech_saletrans');
+                            $this->Commonmodel->insert_record($sale_item, 'saimtech_saletrans');
                         }
                     }
                 }
 
             }
         }
-        
+        $data = $this->request->getVar('data');
         //-------------------
         $resquest['key']    = $key;
         $resquest['data']   = $data;

@@ -94,7 +94,7 @@
                         <div class="menu-item">
                              <a href="<?= URL?>/report/sale_report_by_payment" class="menu-link">
                              <a href="#" class="menu-link">
-                                <span class="menu-text">Sale Report By Payment</span>
+                                <span class="menu-text">Sale Report By Payment</span> 
                             </a>
                         </div>
                     </div>
