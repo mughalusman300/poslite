@@ -68,7 +68,7 @@ $(document).ready(function(){
 	$(document).on('click', '.save', function(){
 		var validate = checkValidation('.item-modal');
 		if (validate) {
-			var type = $(this).data('type');
+			var type = $(this).attr('data-type');
 			var itemsId = $('.itemsId').val();
 			var itemName = $('.itemName').val();
 			var itemCategory = $('.itemCategory').val();
