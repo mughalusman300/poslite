@@ -147,6 +147,25 @@ class Api extends BaseController
                             $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $line->itemId)), 'saimtech_items');
                             if ($item) {
                                 $sale_item['purch_price'] = $item->purchasePrice;
+                            } else {
+                                if ($line->itemId == 99999) {
+                                    $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemName' => $line->itemName)), 'saimtech_items_open');
+
+                                    $sale_item['purch_price'] = $line->price;
+                                    $open_item =  array();
+                                    $open_item['itemName'] = $line->itemName;
+                                    $open_item['itemCategory'] = 'Others';
+                                    $open_item['purchasePrice'] = $line->price;
+                                    $open_item['salePrice'] = $line->price;
+
+                                    if($item) {
+                                        ddd($open_item);
+                                        $this->Commonmodel->update_record($open_item, array('itemsId' => $item->itemId), 'saimtech_items_open');
+                                    } else {
+                                        $this->Commonmodel->insert_record($open_item, 'saimtech_items_open');
+                                    }
+                                }
+
                             }
 
                             $this->Commonmodel->insert_record($sale_item, 'saimtech_saletrans');

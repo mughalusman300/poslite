@@ -56,6 +56,21 @@ class Report extends BaseController
         $data['main_content'] = 'report/sale_report_by_category';
         return view('layouts/page',$data);
     }
+    public function sale_report_by_payment(){
+        $data['title'] = 'Sale Report By Payment';
+        $start_date = $end_date = $report_data =  '';
+        if (isset($_POST) && !empty($_POST)) {
+            $start_date = $this->request->getVar('start_date');
+            $end_date = $this->request->getVar('end_date');
+            $report_data = $this->Reportmodel->getSalesReportByDate($start_date, $end_date);
+            // ddd($report_data);
+            $data['report_data'] = $report_data;
+        }
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['main_content'] = 'report/sale_report_by_payment';
+        return view('layouts/page',$data);
+    }
 
     public function test() {
         $detail = $this->Reportmodel->getSalesReportByCategory('2024-06-01');
