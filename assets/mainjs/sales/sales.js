@@ -50,7 +50,8 @@ $(document).ready(function(){
 	$(document).on('click', '.generate_sales', function(){
 		var validate = checkValidation('#sales');
 		if (validate) {
-			$('#sales').submit();
+			table.destroy();
+			saleList();
 		}
 	});
 

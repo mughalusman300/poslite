@@ -18,7 +18,7 @@
         <!-- <h4>Categories</h4> -->
         <div class="card">
             <div class="card-body">
-                <form id="sales" action="<?=URL?>/sales" method="POST" class="sales">
+                <!-- <form id="sales" action="<?=URL?>/sales" method="POST" class="sales"> -->
                     <div class="row">
                         <div class="col-md-4">
                             <label for="title" class="form-label">Start Date</label> <span class="color-red">*</span>
@@ -35,7 +35,7 @@
                             <button type="button" class="btn btn-outline-theme me-2 generate_sales">Generate Sale</button>
                         </div>
                     </div>
-                </form>
+                <!-- </form> -->
                 
                 <table id="sales_table" class="table text-nowrap w-100">
                     <thead>

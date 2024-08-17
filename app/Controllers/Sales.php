@@ -57,7 +57,7 @@ class Sales extends BaseController
                     $action = 'Returned';
                 } else {
                     $action = '
-                    <button class="btn btn-outline-theme print">Print</button>
+                    <button class="btn btn-outline-theme print disabled">Print</button>
                     <button class="btn btn-outline-theme return-item" data-invoice_code="'. $row->invoice_code. '">Return</button>';
                 }
                 
