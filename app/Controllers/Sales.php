@@ -42,9 +42,9 @@ class Sales extends BaseController
             $sales = $this->Salesmodel->getSalesByDate($start_date, $end_date, $limit, $start);
         } else {
 
-            // $search = trim($this->request->getVar('search')['value']); 
-            // $sales =  $this->Itemmodel->items_search($limit,$start,$search);
-            // $totalFiltered = $this->Itemmodel->items_search_count($search);
+            $search = trim($this->request->getVar('search')['value']); 
+            $sales =  $this->Salesmodel->getSalesByDate_search($start_date, $end_date, $limit,$start,$search);
+            $totalFiltered = $this->Salesmodel->getSalesByDate_search_count($start_date, $end_date, $search);
 
         }
         $data = array();

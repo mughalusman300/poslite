@@ -65,7 +65,7 @@ $this->Reportmodel = new Reportmodel();
                                         </tr>
                                         <?php foreach ($detail as $value) { ?>
                                             <tr>
-                                                <td><?= $value->itemCategory ?></td>
+                                                <td><?= ($value->itemCategory != '') ? $value->itemCategory : 'Open Items' ?></td>
                                                 <td>
                                                     <?= $value->quantity ?>
                                                     <?php $total_quantity += $value->quantity ?>
