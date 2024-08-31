@@ -11,64 +11,19 @@
                     </a>
                 </div>
 
-                <div class="menu-header">Inventory</div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-history"></i></span>
-                        <span class="menu-text">Items</span>
-                    </a>
-                </div>
-                <div class="menu-header">Accounts</div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-book-journal-whills"></i></span>
-                        <span class="menu-text">Accounts</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-bank"></i></span>
-                        <span class="menu-text">Bank</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
-                        <span class="menu-text">PNL</span>
-                    </a>
-                </div>
-
-                <div class="menu-header">System Administration</div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/users" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-user-times"></i></span>
-                        <span class="menu-text">Users</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-blog"></i></span>
-                        <span class="menu-text">User Logs</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-scale-balanced"></i></span>
-                        <span class="menu-text">POS Setting</span>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="<?= URL?>/item" class="menu-link">
-                        <span class="menu-icon"><i class="fa fa-assistive-listening-systems"></i></span>
-                        <span class="menu-text">System Logs</span>
-                    </a>
-                </div>
-
                 <div class="menu-header">Sales</div>
                 <div class="menu-item">
                     <a href="<?= URL?>/sales" class="menu-link">
                         <span class="menu-icon"><i class="fa fa-shopping-bag"></i></span>
                         <span class="menu-text">Sales & Return</span>
+                    </a>
+                </div>
+                
+                <div class="menu-header">Inventory</div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-history"></i></span>
+                        <span class="menu-text">Items</span>
                     </a>
                 </div>
 
@@ -133,12 +88,58 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item d-none">
                     <a href="<?= URL?>/item" class="menu-link">
                         <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
                         <span class="menu-text">Expense Report</span>
                     </a>
-                </div>                
+                </div>    
+
+                <div class="menu-header">Accounts</div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-book-journal-whills"></i></span>
+                        <span class="menu-text">Accounts</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-bank"></i></span>
+                        <span class="menu-text">Bank</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item/underconstruction" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+                        <span class="menu-text">PNL</span>
+                    </a>
+                </div>
+
+                <div class="menu-header">System Administration</div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/users" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-user-times"></i></span>
+                        <span class="menu-text">Users</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-blog"></i></span>
+                        <span class="menu-text">User Logs</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-scale-balanced"></i></span>
+                        <span class="menu-text">POS Setting</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/item" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-assistive-listening-systems"></i></span>
+                        <span class="menu-text">System Logs</span>
+                    </a>
+                </div>            
             </div>
             <!-- END menu -->
         </div>
