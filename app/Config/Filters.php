@@ -32,9 +32,14 @@ class Filters extends BaseConfig
 	 */
 	public $globals = [
 		'before' => [
-			// 'honeypot',
-			// 'csrf',
-		],
+         // 'csrf',      // Apply CSRF protection globally
+	        'auth' => [  // Apply auth filter globally before every request
+	            'except' => [
+	                'login',         // Exclude the login controller
+	                'login/*',       // Exclude all methods in the login controller
+	            ],
+	        ],
+	    ],
 		'after'  => [
 			'toolbar',
 			// 'honeypot',

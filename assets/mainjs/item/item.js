@@ -122,7 +122,7 @@ $(document).ready(function(){
 		if (salePrice != '') {
 			purchasePrice = parseFloat(purchasePrice).toFixed(2);
 			salePrice = parseFloat(salePrice).toFixed(2);
-			if (purchasePrice == salePrice || purchasePrice > salePrice) {
+			if (Number(purchasePrice) >= Number(salePrice)) {
 				Swal.fire('', 'Sales Price can not be less than or equal to purchase price!', 'error');
 				$(this).val('');
 				$(this).focus();
@@ -138,7 +138,7 @@ $(document).ready(function(){
 		if (purchasePrice != '' && salePrice != '') {
 			purchasePrice = parseFloat(purchasePrice).toFixed(2);
 			salePrice = parseFloat(salePrice).toFixed(2);
-			if (purchasePrice == salePrice || purchasePrice > salePrice) {
+			if (Number(purchasePrice) == Number(salePrice) || Number(purchasePrice) > Number(salePrice)) {
 				Swal.fire('', 'Purchase Price can not be greater than or equal to sale price!', 'error');
 				$(this).val('');
 				$(this).focus();

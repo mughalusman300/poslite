@@ -13,7 +13,7 @@ class Auth implements FilterInterface
         $session = \Config\Services::session();
 
         if(!isset($_SESSION['user_id'])){
-        	return redirect()->to('/');
+        	return redirect()->to('/Login');
         }
     }
 
