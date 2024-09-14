@@ -97,6 +97,7 @@ class Salesmodel extends Model {
         $builder->where('invoice_code', $invoice_code);
 
         $builder->groupBy('item_name');
+        $builder->groupBy('price');
         $query = $builder->get();
 
         return $query->getResult();   
