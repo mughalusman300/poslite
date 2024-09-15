@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>SaimTech</title>
-  <link rel="stylesheet" href="<?= URL ?>assets/css/normalize.css">
-  <link rel="stylesheet" href="<?= URL ?>assets/css/paper.css">
+  <link rel="stylesheet" href="<?= URL ?>/assets/css/normalize.css">
+  <link rel="stylesheet" href="<?= URL ?>/assets/css/paper.css">
   <script src="http://logisticasaan365.com/pos/js/jquery-3.7.1.min.js"></script>
   <style>
     @page { size: portrait }
