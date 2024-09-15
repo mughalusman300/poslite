@@ -57,7 +57,7 @@ class Sales extends BaseController
                     $action = 'Returned';
                 } else {
                     $action = '
-                    <button class="btn btn-outline-theme print disabled">Print</button>
+                    <a href="'.URL.'/sales/get_invoice_print/'.$row->invoice_code.'" target="_blank" class="btn btn-outline-theme print" data-invoice_code="'.$row->invoice_code.'">Print</a>
                     <button class="btn btn-outline-theme return-item" data-invoice_code="'. $row->invoice_code. '">Return</button>';
                 }
                 
@@ -95,6 +95,21 @@ class Sales extends BaseController
         $html = view('sales/invoice_datail', $data);
         $result = array('success' =>  true, 'html' => $html);
         return $this->response->setJSON($result);
+    }
+    public function get_invoice_print($invoice_code) {
+        // $invoice_code = $this->request->getVar('invoice_code');
+        $invoice_detail = $this->Salesmodel->getInvoiceDetail($invoice_code);
+        if($invoice_detail) {
+            $data['invoice_date'] = date('m/d/Y h:i:s A', strtotime($invoice_detail[0]->invoice_date));
+            $data['payment_mode']  = $invoice_detail[0]->payment_mode;
+            $data['invoice_detail'] = $invoice_detail;
+            return view('sales/invoice_print', $data);
+
+        } else {
+            echo 'Invoice Not Found';
+        }
+        // $result = array('success' =>  true, 'html' => $html);
+        // return $this->response->setJSON($result);
     }
 
     public function return() {

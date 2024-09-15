@@ -27,7 +27,7 @@ class Salesmodel extends Model {
 
         // ddd($end_date);
         $builder = $this->db->table('saimtech_sales');
-        $builder->select('invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
+        $builder->select('saimtech_sales.sale_id,invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
         $builder->join('saimtech_saletrans', 'saimtech_saletrans.sale_id = saimtech_sales.sale_id', 'inner');
         $builder->where('invoice_date >=', $start_date);
         $builder->where('invoice_date <=', $end_date);
@@ -50,7 +50,7 @@ class Salesmodel extends Model {
         }
 
         $builder = $this->db->table('saimtech_sales');
-        $builder->select('invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
+        $builder->select('saimtech_sales.sale_id,invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
         $builder->join('saimtech_saletrans', 'saimtech_saletrans.sale_id = saimtech_sales.sale_id', 'inner');
         $builder->where('invoice_date >=', $start_date);
         $builder->where('invoice_date <=', $end_date);
@@ -72,7 +72,7 @@ class Salesmodel extends Model {
         $end_date = $end_date .' 23:59:59';
 
         $builder = $this->db->table('saimtech_sales');
-        $builder->select('invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
+        $builder->select('saimtech_sales.sale_id,invoice_code, invoice_date, sum(discount) as invoice_discount, sum(net_price) as invoice_net, sum(net_price+discount) as invoice_total, payment_mode, is_return_all');
         $builder->join('saimtech_saletrans', 'saimtech_saletrans.sale_id = saimtech_sales.sale_id', 'inner');
         $builder->where('invoice_date >=', $start_date);
         $builder->where('invoice_date <=', $end_date);
@@ -91,7 +91,7 @@ class Salesmodel extends Model {
     public function getInvoiceDetail($invoice_code) {
 
         $builder = $this->db->table('saimtech_sales');
-        $builder->select('invoice_code, invoice_date, sale_trans_id, item_id, item_name, price, sum(quantity) as quantity, sum(discount) as discount, sum(net_price) as net_price');
+        $builder->select('saimtech_sales.invoice_date, saimtech_sales.payment_mode, invoice_code, invoice_date, sale_trans_id, item_id, item_name, price, sum(quantity) as quantity, sum(discount) as discount, sum(net_price) as net_price');
 
         $builder->join('saimtech_saletrans', 'saimtech_saletrans.sale_id = saimtech_sales.sale_id', 'inner');
         $builder->where('invoice_code', $invoice_code);
