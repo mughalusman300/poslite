@@ -24,6 +24,9 @@
 <link href="<?= URL ?>/assets/plugins/select2/css/select2.min.css" rel="stylesheet">
 <link href="<?= URL ?>/assets/plugins/select/select.css" rel="stylesheet">
 <link href="<?= URL ?>/assets/plugins/select2/css/select2-bootsrap5.css" rel="stylesheet">
+
+<link href="<?= URL ?>/css/vendor/bootstrap-datepicker3.min.css" rel="stylesheet">
+
 <!-- ================== END page-css ================== -->
 
 <script type="text/javascript">

@@ -13,7 +13,6 @@
     <?php else:?>
         <div id="app" class="app">
     <?php endif;?>
-    <?php $_SESSION['user_id']=1 ?>
         <?php if(!isset($_SESSION['user_id'])): ?>
             <?php header("Location:".URL);
             exit();

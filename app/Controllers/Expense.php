@@ -49,18 +49,28 @@ class Expense extends BaseController
 
             $i = 1;
             foreach ($expenses as $row) {
-                $action = '<button class="btn btn-outline-theme view-expense">View</button>';
+                $total_expense = $this->Expensemodel->get_total_expense($row->id);
+                $pending_expense = $this->Expensemodel->get_pending_expense($row->id);
+                if($pending_expense == 0) {
+                    $status = 'Completed';
+                } else if($total_expense != $pending_expense) {
+                    $status = 'Partial Approved';
+                } else {
+                    $status = 'Pending Approval';
+                }
+
+                if($status == 'Completed'){
+                    $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>'; 
+                } else {
+                    $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>'; 
+                    $action .= ' <a href="'.URL.'/expense/detail/approve/'.$row->id.'" class="btn btn-outline-theme view-expense">Approve</a>';
+                }
 
                 $nestedData['sr'] = $i;
-                $nestedData['month_year'] = $row->year;
+                $nestedData['month_year'] = $row->month_year;
                 $nestedData['total'] = $row->total;
 
-                $status = ($row->is_approved) ? 'Approved' : 'Not Approved';
-                $checked = ($row->is_approved) ? 'checked' : '';
-                $status = '<div class="form-check form-switch">
-                            <input type="checkbox" style="opacity:1" disabled data-id="'.$row->id.'" class="form-check-input" id="is_approved" '. $checked .'>
-                            <label class="form-check-label" style="opacity:1" for="customSwitch2">'. $status. '</label>
-                        </div>'  ;                          
+                 
                 $nestedData['created_by'] = $row->name;
                 $nestedData['created_date'] = date('d-m-Y',strtotime($row->created_at));
                 $nestedData['status'] = $status;
@@ -84,15 +94,115 @@ class Expense extends BaseController
     }
 
     public function add_expense(){
-        $data['title'] = 'Add Expense';
+        if (isset($_POST) && !empty($_POST)) {
+            $month_year = $this->request->getVar('month_year');
+            $month_year = '01-'.$month_year;
+            $data['month_year'] = date('F, Y', strtotime($month_year));
+            $data['desc'] = $desc = $this->request->getVar('desc');
+            $data['created_by'] = $_SESSION['user_id'];
+
+            $expense_id = $this->Commonmodel->insert_record($data, 'saimtech_expense');
+
+            if($expense_id) {
+                $total = 0;
+                foreach ($_POST['date'] as $key => $value) {
+                    $date = $this->request->getVar("date")[$key];
+                    $detail_data['expense_header_id'] = $this->request->getVar("expense_header_id")[$key];
+                    $detail_data['party_id'] = $this->request->getVar("party_id")[$key];
+                    $detail_data['payment_mode_id'] = $this->request->getVar("payment_mode_id")[$key];
+                    $detail_data['narration'] = $this->request->getVar("narration")[$key];
+
+                    $detail_data['amount'] = $amount = $this->request->getVar("amount")[$key];
+                    $total += $amount;
+
+                    $detail_data['date'] = date('Y-m-d',strtotime($date));
+                    $detail_data['expense_id'] = $expense_id;
+                    $data['created_by'] = $_SESSION['user_id'];
+
+                    $expense_detail_id = $this->Commonmodel->insert_record($detail_data, 'saimtech_expense_detail');
+                }
+
+                $this->Commonmodel->update_record(array('total' => $total),array('id' => $expense_id), 'saimtech_expense');
+
+                session()->setFlashdata('message', 'Expense added successfully.');
+                return redirect()->to('/expense');
+            }
+
+        } else {
+            $data['title'] = 'Add Expense';
+            // $data['inventory'] ="nav-expanded nav-active";
+            // $data['category'] ="nav-active";
+
+            $data['headers'] = $this->Expensemodel->all_header(-1,0);
+            $data['parties'] = $this->Expensemodel->all_party(-1,0);
+            $data['modes'] = $this->Expensemodel->all_mode(-1,0);
+            $data['main_content'] = 'expense/add_expense';
+            return view('layouts/page',$data);  
+        }
+    }
+
+    public function detail($type, $expense_id){
+        $data['title'] = 'Expense Detail';
         // $data['inventory'] ="nav-expanded nav-active";
         // $data['category'] ="nav-active";
-
         $data['headers'] = $this->Expensemodel->all_header(-1,0);
         $data['parties'] = $this->Expensemodel->all_party(-1,0);
         $data['modes'] = $this->Expensemodel->all_mode(-1,0);
-        $data['main_content'] = 'expense/add_expense';
-        return view('layouts/page',$data);
+
+        $data['expense'] = $expense  = $this->Expensemodel->get_expense_by_id($expense_id);
+        $data['pending_expense'] = $pending_expense = $this->Expensemodel->get_pending_expense($expense_id);
+        $data['total_expense'] = $total_expense = $this->Expensemodel->get_total_expense($expense_id);
+        $data['expense_id'] = $expense_id;
+        $data['month_year'] = $expense[0]->month_year;
+        $data['total'] = $expense[0]->total;
+        $data['desc'] = $expense[0]->desc;
+
+        if($type == 'view') {
+            $data['title'] = 'View Expense';
+            $data['main_content'] = 'expense/expense_detail_view';
+        } else {
+            $data['main_content'] = 'expense/expense_detail';
+        }
+        return view('layouts/page',$data); 
+    }
+
+    public function update_expense_detail_status(){
+        $expense_id = $this->request->getVar('expense_id');
+        $id = $this->request->getVar('expense_detail_id');
+        $type = $this->request->getVar('type');
+
+        $data = array('is_approved' => 'y');
+        $msg = "Expense approved successfully!";
+        if($type == 'reject') {
+            $data = array('is_approved' => 'n');
+            $msg = "Expense rejected successfully!";
+        } 
+        $data['approved_by'] = $_SESSION['user_id'];
+        $data['approved_date'] = date('Y-m-d H:i:s');
+        $this->Commonmodel->update_record($data, array('id' => $id), 'saimtech_expense_detail');
+
+        $total_expense = $this->Expensemodel->get_total_expense($expense_id);
+        $pending_expense = $this->Expensemodel->get_pending_expense($expense_id);
+
+        $result = array('success' =>  true, 'msg' => $msg, 'pending_expense' => $pending_expense, 'total_expense' => $total_expense);
+
+        return $this->response->setJSON($result);
+    }
+
+    public function approve_all_expense(){
+        $expense_id = $this->request->getVar('expense_id');
+
+        $data['is_approved'] = 'y';
+        $data['approved_by'] = $_SESSION['user_id'];
+        $data['approved_date'] = date('Y-m-d H:i:s');
+
+        $this->Commonmodel->update_record($data, array('expense_id' => $expense_id), 'saimtech_expense_detail');
+        $msg = 'All expense approved successfully!';
+        session()->setFlashdata('message', $msg);
+
+        $result = array('success' =>  true, 'msg' => $msg);
+
+        return $this->response->setJSON($result);
     }
 
     //Expense Header functions

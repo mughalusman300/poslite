@@ -26,7 +26,7 @@
 							<th>Total</th>
 							<th>Created By</th>
 							<th>Created Date</th>
-							<th>Approved Status</th>
+							<th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>

@@ -162,7 +162,7 @@ function checkValidation(el) {
 
         if (field.is(':visible')) {
             if (type == "text" || type == "email" || type == "number" || type == "textarea" || type == 'password' 
-                || type == 'date' || type == 'file' || field.hasClass("select")) {
+                || type == 'date' || type == 'month' || type == 'file' || field.hasClass("select")) {
                 if (value == '') {
                     field.addClass('is-invalid');
                     check = false;

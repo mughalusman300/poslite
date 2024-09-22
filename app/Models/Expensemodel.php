@@ -16,6 +16,8 @@ class Expensemodel extends Model {
 
     public function all_expense($limit,$start){  
         $builder = $this->db->table('saimtech_expense'); 
+        $builder->select('saimtech_expense.*');
+        $builder->select('saimtech_users.created_by, saimtech_users.name');
         $builder->join('saimtech_users', 'saimtech_users.id = saimtech_expense.created_by');
         if ($limit == -1){
             $limit = 12546464646464646;
@@ -32,7 +34,7 @@ class Expensemodel extends Model {
         $builder = $this->db->table('saimtech_expense');
         $builder->join('saimtech_users', 'saimtech_users.id = saimtech_expense.created_by');
         $builder->like('name', $search);
-        $builder->orLike('year', $search);
+        $builder->orLike('month_year', $search);
 
        $query = $builder->get();
     
@@ -45,9 +47,11 @@ class Expensemodel extends Model {
         }
 
         $builder = $this->db->table('saimtech_expense');
+        $builder->select('saimtech_expense.*');
+        $builder->select('saimtech_users.created_by, saimtech_users.name');
         $builder->join('saimtech_users', 'saimtech_users.id = saimtech_expense.created_by');
         $builder->like('name', $search);
-        $builder->orLike('year', $search);
+        $builder->orLike('month_year', $search);
 
         $builder->limit($limit,$start);
         // $builder->order_by('category_id',"asc")
@@ -192,6 +196,32 @@ class Expensemodel extends Model {
     
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
         return $result; 
+    }
+
+    public function get_expense_by_id($expense_id) {
+        $builder = $this->db->table('saimtech_expense'); 
+        $builder->select('saimtech_expense.month_year,saimtech_expense.total, saimtech_expense.desc'); 
+        $builder->select('saimtech_expense_detail.*'); 
+        $builder->select('saimtech_users.name as approved_by_user');
+        $builder->join('saimtech_expense_detail', 'saimtech_expense_detail.expense_id = saimtech_expense.id');
+        $builder->join('saimtech_users', 'saimtech_users.id = saimtech_expense_detail.approved_by', 'left');
+        $builder->where('expense_id', $expense_id);
+        $query = $builder->get();  
+        $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
+        return $result; 
+    }
+    public function get_pending_expense($expense_id) {
+        $builder = $this->db->table('saimtech_expense_detail');
+        $builder->where('expense_id', $expense_id); 
+        $builder->where('is_approved', 'p'); 
+        $query = $builder->get();  
+        return $query->getNumRows(); 
+    }
+    public function get_total_expense($expense_id) {
+        $builder = $this->db->table('saimtech_expense_detail');
+        $builder->where('expense_id', $expense_id); 
+        $query = $builder->get();  
+        return $query->getNumRows(); 
     }
 
 

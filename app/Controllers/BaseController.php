@@ -42,6 +42,7 @@ class BaseController extends Controller
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
 		$session = \Config\Services::session();
+		date_default_timezone_set('Asia/Karachi'); 
 
 
 		//--------------------------------------------------------------------

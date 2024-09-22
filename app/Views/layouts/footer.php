@@ -1,4 +1,4 @@
-    
+
 
     <!-- BEGIN btn-scroll-top -->
     <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
@@ -91,6 +91,19 @@
     <script type="text/javascript" src="<?=URL?>/assets/mainjs/fileUpload.js<?= version ?>"></script>
     <script type="text/javascript" src="<?=URL?>/assets/plugins/select/select.js<?= version ?>"></script>
 
-    <?php if (in_array($main_content, array('category/category')) || in_array($main_content, array('product/product')) || in_array($main_content, array('product/addProduct')) || in_array($main_content, array('product/updateProduct')) || in_array($main_content, array('uom')) || in_array($main_content, array('variant/variant')) || in_array($main_content, array('variant/detail')) || in_array($main_content, array('group/group')) || in_array($main_content, array('location/location')) || in_array($main_content, array('inventory/inventoryin')) || in_array($main_content, array('inventory/inventory')) || in_array($main_content, array('inventory/inv_detail')) || in_array($main_content, array('store/store')) || in_array($main_content, array('item/item')) || in_array($main_content, array('users/users')) || in_array($main_content, array('report/sale_report_by_date')) || in_array($main_content, array('report/sale_report_by_category')) || in_array($main_content, array('report/sale_report_by_payment')) || in_array($main_content, array('sales/sales')) || in_array($main_content, array('expense/expense_header'))  || in_array($main_content, array('expense/payment_mode')) || in_array($main_content, array('expense/party')) || in_array($main_content, array('expense/expense')) || in_array($main_content, array('expense/add_expense')) ) { ?>
+    <script type="text/javascript" src="<?=URL?>/js/vendor/bootstrap-datepicker.js<?= version ?>"></script>
+
+    <?php 
+        $message = session()->getFlashdata('message');
+        if (isset($message)){ ?>
+            <script type="text/javascript">
+                var message = "<?php echo $message;?>";
+                $(document).ready(function() {
+                    Swal.fire('Alert', message, 'success');
+                });
+            </script>
+    <?php } ?> 
+
+    <?php if (in_array($main_content, array('category/category')) || in_array($main_content, array('product/product')) || in_array($main_content, array('product/addProduct')) || in_array($main_content, array('product/updateProduct')) || in_array($main_content, array('uom')) || in_array($main_content, array('variant/variant')) || in_array($main_content, array('variant/detail')) || in_array($main_content, array('group/group')) || in_array($main_content, array('location/location')) || in_array($main_content, array('inventory/inventoryin')) || in_array($main_content, array('inventory/inventory')) || in_array($main_content, array('inventory/inv_detail')) || in_array($main_content, array('store/store')) || in_array($main_content, array('item/item')) || in_array($main_content, array('users/users')) || in_array($main_content, array('report/sale_report_by_date')) || in_array($main_content, array('report/sale_report_by_category')) || in_array($main_content, array('report/sale_report_by_payment')) || in_array($main_content, array('sales/sales')) || in_array($main_content, array('expense/expense_header'))  || in_array($main_content, array('expense/payment_mode')) || in_array($main_content, array('expense/party')) || in_array($main_content, array('expense/expense')) || in_array($main_content, array('expense/add_expense')) || in_array($main_content, array('expense/expense_detail')) ) { ?>
         <script type="text/javascript" src="<?=URL?>/assets/mainjs/<?= $main_content?>.js<?= version ?>"></script>
     <?php } ?>

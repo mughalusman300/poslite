@@ -37,6 +37,8 @@ class Filters extends BaseConfig
 	            'except' => [
 	                'login',         // Exclude the login controller
 	                'login/*',       // Exclude all methods in the login controller
+	                'api',
+	                'api/*',
 	            ],
 	        ],
 	    ],
