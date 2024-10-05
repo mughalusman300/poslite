@@ -8,7 +8,7 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Items 
-		<button type="button" class="btn btn-outline-theme me-2 add-item">Add Item</button>
+		<button type="button" class="btn btn-outline-theme me-2 add-item">Add Item TESTY</button>
 		<!-- Items <small>page header description goes here...</small> -->
 	</h1>
 
