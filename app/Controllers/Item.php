@@ -61,10 +61,18 @@ class Item extends BaseController
                     data-itemTags="'.$row->itemTags.'"
                     >Edit</button>
                 ';
+                $detail_url = URL. '/inventory/item_inv_detail/'. $row->itemsId;  
+                $action.= '<a  href="'. $detail_url .'" target="_blank" class="btn btn-outline-theme">Inventory</a>';
+                $action.= '<button type="button" class="btn btn-outline-theme ms-1 print-barcode" 
+                    data-item_id="'.$row->itemsId.'"  
+                    data-barcode="'.$row->barcode.'"  
+                    style="">Barcode <i class="fa fa-barcode" aria-hidden="true"></i>
+                </button>';
 
                 $nestedData['sr'] = $i;
                 $nestedData['itemName'] = $row->itemName;
                 $nestedData['itemCategory'] = $row->itemCategory;
+                $nestedData['qty'] = $row->qty;
                 $nestedData['purchasePrice'] = $row->purchasePrice;
                 $nestedData['salePrice'] = $row->salePrice;
                 $nestedData['discount'] = $row->discount;
@@ -154,6 +162,45 @@ class Item extends BaseController
         $msg = ($itemActive) ? 'Item activated successfully!' : 'Item deactivated successfully!'; 
         $result = array('success' =>  true, 'msg' => $msg);
 
+        return $this->response->setJSON($result);
+    }
+
+    public function getItemBarcodeData(){
+        $result = array('success' =>  false);
+        $item_id = $this->request->getVar('item_id');
+        $barcode = $this->request->getVar('barcode');
+
+        $data['item'] = $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $item_id)), 'saimtech_items');
+        if ($item) {
+            $html = view('item/item_barcode_data', $data);
+            $result = array('success' =>  true, 'html' => $html);
+        }
+        return $this->response->setJSON($result);
+    }
+
+    public function generate_items_auto_barcode() {
+        $items = $this->Itemmodel->all_items(-1,0);
+        foreach ($items as $row) {
+            if ($row->barcode == '') {
+                $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
+            }
+        }
+
+        echo 'All Barcodes added!';
+    }
+
+    public function update_barcode(){
+        $old_barcode = $this->request->getVar('old_barcode');
+        $new_barcode = $this->request->getVar('new_barcode');
+        if (strlen($new_barcode) < 3) {
+            $result = array('success' =>  false, 'msg' => 'Barcode should be at least three characters!');
+            return $this->response->setJSON($result);
+            exit();
+        }
+        $this->Commonmodel->update_record(array('barcode' => $new_barcode),array('barcode' => $old_barcode), 'saimtech_items');
+        $this->Commonmodel->generateProductBarcode($new_barcode, 'code128', false);
+        
+        $result = array('success' =>  true);
         return $this->response->setJSON($result);
     }
 }

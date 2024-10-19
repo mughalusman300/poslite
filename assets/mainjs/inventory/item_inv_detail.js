@@ -2,7 +2,7 @@ $(document).ready(function(){
 	invntoryList();
 
 	function invntoryList(search =''){
-		var inv_in_id = $('.inv_in_id').val();
+		var item_id = $('.item_id').val();
 		var table = $('#inv_detail').DataTable({
 			"rowCallback": function( row, data ) {
 				$('td:eq(0)', row).addClass('align-middle');
@@ -10,7 +10,6 @@ $(document).ready(function(){
 				$('td:eq(2)', row).addClass('align-middle');
 				$('td:eq(3)', row).addClass('align-middle');
 				$('td:eq(4)', row).addClass('align-middle');
-				$('td:eq(5)', row).addClass('align-middle');
 			},
 			responsive: false,
 			// buttons: [
@@ -28,17 +27,16 @@ $(document).ready(function(){
 			"ordering"   :false,
 	        "processing": true,
 	        "ajax":{
-		     	"url": base +"/inventory/detailList",
+		     	"url": base +"/inventory/itemInvDetailList",
 		     	"dataType": "json",
-		        "data":{ inv_in_id: inv_in_id, search: search },
+		        "data":{ item_id: item_id, search: search },
 		     	"type": "POST",
 		    },
 	    	"columns": [
-		        { "data": "location" },
-		        { "data": "sale_qty" },
-		        { "data": "purch_total_price" },
-		        { "data": "sale_unit_cost" },
-		        { "data": "sale_unit_price" },
+		        { "data": "sr" },
+		        { "data": "inventory_qty" },
+		        { "data": "purchase_price" },
+		        { "data": "sale_price" },
 		        { "data": "date" },
 		    ],
 	    	"columnDefs": [
@@ -47,7 +45,6 @@ $(document).ready(function(){
 	        	{ targets: 2, width: '200px' },
 	        	{ targets: 3, width: '200px' },
 	        	{ targets: 4, width: '200px' },
-	        	{ targets: 5, width: '200px' },
 	        ]
 	    });
 	}

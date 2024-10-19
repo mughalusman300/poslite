@@ -8,7 +8,7 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Items 
-		<button type="button" class="btn btn-outline-theme me-2 add-item">Add Item TESTY</button>
+		<button type="button" class="btn btn-outline-theme me-2 add-item">Add Item</button>
 		<!-- Items <small>page header description goes here...</small> -->
 	</h1>
 
@@ -24,6 +24,7 @@
 							<th>#</th>
 							<th>Name</th>
 							<th>Category</th>
+							<th>Qty</th>
 							<th>Purchase Price</th>
 							<th>Sale Price</th>
 							<th>Discount</th>
@@ -45,3 +46,4 @@
 </div>
 <!-- END #content -->
 <?php include(APPPATH . 'Views/modals/item-modal.php') ?>
+<?php include(APPPATH . 'Views/modals/item-barcode-modal.php') ?>

@@ -25,6 +25,7 @@ $(document).ready(function(){
 	        { "data": "sr" },
 	        { "data": "itemName" },
 	        { "data": "itemCategory" },
+	        { "data": "qty" },
 	        { "data": "purchasePrice" },
 	        { "data": "salePrice" },
 	        { "data": "discount" },
@@ -35,11 +36,12 @@ $(document).ready(function(){
         	{ targets: 0, width: '150px' },
         	{ targets: 1, width: '200px' },
         	{ targets: 0, width: '200px' },
-        	{ targets: 3, width: '200px' },
+        	{ targets: 3, width: '150px' },
         	{ targets: 4, width: '200px' },
         	{ targets: 5, width: '200px' },
         	{ targets: 6, width: '200px' },
         	{ targets: 7, width: '200px' },
+        	{ targets: 8, width: '200px' },
         ]
     });
 	function itemList(){
@@ -190,6 +192,80 @@ $(document).ready(function(){
 				}
 			}
 		});	
+	});
+
+	$(document).on('click','.print-barcode',function() {
+		var item_id = $(this).data('item_id');
+		var barcode = $(this).data('barcode');
+
+		$.ajax({
+			url: base + "/item/getItemBarcodeData",
+			type: "POST",
+			data: {item_id: item_id, barcode: barcode},        
+			success: function(data) {
+			    if (data.success) {
+			    	$('.item-barcode-modal').modal('show');
+			    	$('.item-barcode-modal .modal-body').html(data.html);
+				} else {
+					Swal.fire('', 'Something went wrong! Please try later', 'error');
+				}
+			}
+		});	
+
+	});
+
+	$(document).on('click','.print',function() {
+		var barcode = $(this).closest('tr').find('.old_barcode').val();
+		var qty = parseInt($(this).closest('tr').find('.barcode_qty').val());
+
+		if (qty == 0) {
+			$(this).closest('tr').find('.barcode_qty').addClass('is-invalid');
+			Swal.fire('', 'Quantity should be greater than zero!', 'error');
+			return false;
+		} 
+		// else if (qty > 100) {
+		// 	$(this).closest('tr').find('.barcode_qty').addClass('is-invalid');
+		// 	Swal.fire('', 'Quantity should be less than 100!', 'error');
+		// 	return false;
+		// }
+
+		if (qty > 0) {
+			var url = base + "/inventory/item_barcode/"+barcode+"/"+qty;
+			var win = window.open(url, '_blank');
+			win.focus();
+		}
+
+	});
+
+	$(document).on('click','.update-barcode',function() {
+		var new_barcode = $('.new_barcode').val();
+		var old_barcode = $('.old_barcode').val();
+		if (new_barcode == old_barcode) {
+			return false;
+		}
+		var validate = checkValidation('#barcode-table');
+		if (validate) {
+			$.ajax({
+				url: base + "/item/update_barcode",
+				type: "POST",
+				data: {old_barcode: old_barcode, new_barcode: new_barcode},        
+				success: function(data) {
+				    if (data.success) {
+				    	$('.old_barcode').val(new_barcode);
+				    	let url = $('.barcode-img').attr('src');
+				    	let trimmedUrl = url.substring(0, url.lastIndexOf('/'));
+				    	new_image_url = trimmedUrl+'/'+new_barcode+'.png';
+				    	console.log(new_image_url)
+				    	$('.barcode-img').attr('src', new_image_url);
+				    	Swal.fire('', 'Barcode updated successfully!', 'success');
+					} else {
+						Swal.fire('', data.msg, 'error');
+					}
+				}
+			});	
+
+		}
+
 	});
 
 });

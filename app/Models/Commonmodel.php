@@ -8,6 +8,7 @@ class Commonmodel extends Model {
     public function __construct() { 
         parent::__construct(); 
         $this->db      = \Config\Database::connect();  
+        helper('custom_helper');
     }
     //======================================================================
     //START--------------Generic Function For Model-------------------------
@@ -319,7 +320,7 @@ class Commonmodel extends Model {
         //
     }
    
-    public function generateProductBarcode($text, $type = 'upca', $unlink = true) {
+    public function generateProductBarcode($text, $type = 'code128', $unlink = true) {
         if ($unlink) {
             $files = glob('pdf/*'); // get all file names
             foreach($files as $file) { // iterate files
@@ -329,12 +330,30 @@ class Commonmodel extends Model {
             }
         }
         
-        $barcodeOptions = ['text' => $text, 'barHeight' => 50];
+        $barcodeOptions = [ // by setting following configuration achive the max high as static
+              'text' => $text,
+              'barHeight' => 40,  // Static bar height to prevent overflow
+              'barThickWidth' => 2, // Adjust the thickness of bars to control width
+              'stretchText' => false,
+              'drawText' => true,
+              'fontSize' => 10,  // Smaller font size to fit within dimensions
+              'factor' => 2,  // Scaling factor to control the overall size
+          ];
+
+        // $barcodeOptions = [
+        //     'text' => $text, 
+        //     'barHeight' => 60, 
+        //     'barThickWidth' => 6, 
+        //     'stretchText' => false,
+        //     'drawText' => true, 
+        //     'fontSize' => 14,
+        //     'factor' => 0.9,
+        // ];
 
         // No required options.
         $rendererOptions = array();
         $barcode = Barcode::factory(
-            'upca',
+            $type,
             'image',
             $barcodeOptions,
             $rendererOptions
@@ -342,8 +361,32 @@ class Commonmodel extends Model {
         // $file = $barcode->draw();
         imagepng($barcode, "pdf/{$text}.png");
 
+        // Ensure the image is resized to fit within your predefined space
+        // $this->resizeBarcodeImage("pdf/{$text}.png", 45, 20);  // Example dimensions (width, height)
+
         return 'pdf/' . $text . '.png';
         // dd($file);
+    }
+
+    // Function to resize the barcode image
+    public function resizeBarcodeImage($filePath, $newWidth, $newHeight) {
+        // Load the image
+        $image = imagecreatefrompng($filePath);
+        $width = imagesx($image);
+        $height = imagesy($image);
+
+        // Create a new true color image
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+
+        // Copy and resize old image into new one
+        imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        // Save the resized image
+        imagepng($newImage, $filePath);
+
+        // Free memory
+        imagedestroy($image);
+        imagedestroy($newImage);
     }
 
     public function generateProductNewBarcode() {
@@ -360,6 +403,15 @@ class Commonmodel extends Model {
                 $result .= mt_rand(0, 9);
         }
         return $result ;
+    }
+
+    public function generateItemAutoBarcode($itemsId) {
+        $first_code= $this->getBarcode(3);
+        $second_code = "INV-";
+        $third_code= $this->getBarcode(7);
+
+        $barcode = $first_code.$second_code.$third_code;
+        $this->update_record(array('barcode' => $barcode),array('itemsId' => $itemsId), 'saimtech_items');
     }
 
 

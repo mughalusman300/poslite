@@ -26,6 +26,18 @@
                         <span class="menu-text">Items</span>
                     </a>
                 </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/category" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-history"></i></span>
+                        <span class="menu-text">Category</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="<?= URL?>/inventory" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-assistive-listening-systems"></i></span>
+                        <span class="menu-text">Inventory List</span>
+                    </a>
+                </div>
 
                 <div class="menu-header">Expense</div>
                 <div class="menu-item has-sub">

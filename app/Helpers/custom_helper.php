@@ -377,7 +377,25 @@ if(! function_exists("get_site_lang")){
         return $site_lang;
     }
 }
+if ( ! function_exists('inventory_code'))
+{
+    function inventory_code() {
+        $db = \Config\Database::connect();
 
+        $builder = $db->table('saimtech_inventory');
+        $builder->select('(inventory_code) as next_inventory_code');
+        $builder->orderBy('inventory_code','desc');
+        $query = $builder->get();
+        if (!empty($query->getRow()->next_inventory_code)) {
+            $inventory_code  = $query->getRow()->next_inventory_code;
+            $inventory_code  = substr($inventory_code, 4);
+            $inventory_code = 'INV-'.($inventory_code + 1);
+        } else {
+            $inventory_code = 'INV-100001';
+        }
+        return $inventory_code;
+    }
+}
 if (!function_exists("ddd")) {
     function ddd($array,  $die = true, $label = '') {
         echo '<pre>';
