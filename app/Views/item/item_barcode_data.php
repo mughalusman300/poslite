@@ -21,16 +21,25 @@ $this->Commonmodel = new Commonmodel();
 							<?php 
 								$barcode = $item->barcode;
 								$full_barcode = $barcode;
+								$link = LIVE_URL.'pdf/' . $barcode . '.png';
 
-								$this->Commonmodel->generateProductBarcode($barcode, 'code128', false);
+
+								$headers = @get_headers($link);
+								if ($headers && strpos($headers[0], '200') !== false) {
+									
+								} else {
+									$this->Commonmodel->generateProductBarcode($barcode, 'code128');
+								}
+
 							?>
 
-							<img style="max-width: 185px; max-height: 70px;" class="barcode-img" src="<?= URL?>/pdf/<?= $barcode?>.png" alt="barcode">
+							<img style="max-width: 185px; max-height: 70px;" class="barcode-img" src="<?= LIVE_URL?>pdf/<?= $barcode?>.png" alt="barcode">
 						</td>
 						<td>
 							<input type="text" class="form-control validate-input uppercase new_barcode" value="<?= $barcode ?>" />
 						</td>
 						<td>
+							<input type="hidden" class="item_id" value="<?=$item->itemsId ?>">
 							<input type="hidden" class="barcode old_barcode" value="<?=$barcode ?>">
 							<input type="number" class="form-control validate-input barcode_qty number w-100px" min="1" max="100" placeholder="1" value="1" required="">
 						</td>

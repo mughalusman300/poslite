@@ -17,7 +17,14 @@
 
 							<div class="col-md-6 mb-3">
 								<label for="itemCategory" class="form-label">Category</label> <span class="color-red">*</span>
-								<input type="text" class="form-control validate-input itemCategory" placeholder="Category" id="itemCategory" value="" required="">
+								<select name="category_id" id="category_id" class="form-control validate-input select category_id">
+									<option value="">Select</option>
+									<?php foreach ($categories as $row) { ?>
+										<option value="<?= $row->category_id ?>"><?= $row->title ?></option>
+									<?php } ?>
+								</select>
+
+								<input type="hidden" class="form-control validate-input itemCategory" placeholder="Category" id="itemCategory" value="" required="">
 							</div>
 							<div class="col-md-4">
 								<label for="purchasePrice" class="form-label">Purchase Price</label> <span class="color-red">*</span>

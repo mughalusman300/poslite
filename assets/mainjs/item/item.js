@@ -61,7 +61,7 @@ $(document).ready(function(){
 
 		$('.itemsId').val($(this).data('itemsid'));
 		$('.itemName').val($(this).data('itemname'));
-		$('.itemCategory').val($(this).data('itemcategory'));
+		$('.category_id').val($(this).data('category_id'));
 		$('.purchasePrice').val($(this).data('purchaseprice'));
 		$('.salePrice').val($(this).data('saleprice'));
 		$('.discount').val($(this).data('discount'));
@@ -73,17 +73,17 @@ $(document).ready(function(){
 			var type = $(this).attr('data-type');
 			var itemsId = $('.itemsId').val();
 			var itemName = $('.itemName').val();
-			var itemCategory = $('.itemCategory').val();
+			var category_id = $('.category_id').val();
 			var purchasePrice = $('.purchasePrice').val();
 			var salePrice = $('.salePrice').val();
 			var discount = $('.discount').val();
 
 			if (type == 'add') {
-				var mydata = {type: type, itemName: itemName, itemCategory: itemCategory, purchasePrice: purchasePrice, salePrice: salePrice, discount: discount };
+				var mydata = {type: type, itemName: itemName, category_id: category_id, purchasePrice: purchasePrice, salePrice: salePrice, discount: discount };
 				var notify_title = 'Item Add';
 				var notify_text = 'Item Add successfully!';
 			} else {
-				var mydata = {type: type, itemsId: itemsId,  itemName: itemName, itemCategory: itemCategory, purchasePrice: purchasePrice, salePrice: salePrice, discount: discount };
+				var mydata = {type: type, itemsId: itemsId,  itemName: itemName, category_id: category_id, purchasePrice: purchasePrice, salePrice: salePrice, discount: discount };
 				var notify_title = 'Item Update';
 				var notify_text = 'Item Update successfully!';
 			}
@@ -238,9 +238,12 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click','.update-barcode',function() {
+		var item_id = $('.item_id').val();
+		console.log(item_id);
 		var new_barcode = $('.new_barcode').val();
 		var old_barcode = $('.old_barcode').val();
 		if (new_barcode == old_barcode) {
+			Swal.fire('', 'Please update barcode first!', 'warning');
 			return false;
 		}
 		var validate = checkValidation('#barcode-table');
@@ -248,7 +251,7 @@ $(document).ready(function(){
 			$.ajax({
 				url: base + "/item/update_barcode",
 				type: "POST",
-				data: {old_barcode: old_barcode, new_barcode: new_barcode},        
+				data: {item_id: item_id, old_barcode: old_barcode, new_barcode: new_barcode},        
 				success: function(data) {
 				    if (data.success) {
 				    	$('.old_barcode').val(new_barcode);

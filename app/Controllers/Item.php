@@ -22,6 +22,9 @@ class Item extends BaseController
 
         $items = $this->Commonmodel->getAllRecords('saimtech_items');
         $data['items'] = $items;
+        $categories = $this->Commonmodel->getAllRecords('saimtech_category');
+        $data['categories'] = $categories;
+
         $data['main_content'] = 'item/item';
         return view('layouts/page',$data);
     }
@@ -55,6 +58,7 @@ class Item extends BaseController
                     data-itemsId="'.$row->itemsId.'"
                     data-itemName="'.$row->itemName.'"
                     data-itemCategory="'.$row->itemCategory.'"
+                    data-category_id="'.$row->category_id.'"
                     data-purchasePrice="'.$row->purchasePrice.'"
                     data-salePrice="'.$row->salePrice.'"
                     data-discount="'.$row->discount.'"
@@ -109,14 +113,17 @@ class Item extends BaseController
 
         $type = $this->request->getVar('type');
         $itemName = $this->request->getVar('itemName');
-        $itemCategory = $this->request->getVar('itemCategory');
+        $category_id = $this->request->getVar('category_id');
         $purchasePrice = $this->request->getVar('purchasePrice');
         $salePrice = $this->request->getVar('salePrice');
         $discount = $this->request->getVar('discount');
 
+        $category = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('category_id' => $category_id)), 'saimtech_category');
+
         $data = array(
             'itemName' => $itemName,
-            'itemCategory' => $itemCategory,
+            'itemCategory' => $category->title,
+            'category_id' => $category_id,
             'purchasePrice' => $purchasePrice,
             'salePrice' => $salePrice,
             'discount' => $discount,
@@ -126,7 +133,8 @@ class Item extends BaseController
             $item_exist = $this->Commonmodel->Duplicate_check(array('itemName' => $itemName), 'saimtech_items');
             $data['created_by'] = $_SESSION['user_id'];
             if (!$item_exist) {
-                $this->Commonmodel->insert_record($data, 'saimtech_items');
+                $insert_id = $this->Commonmodel->insert_record($data, 'saimtech_items');
+                $this->Commonmodel->generateItemAutoBarcode($insert_id);
                 $result = array('success' =>  true);
             } else {
                 $msg = 'This Item '. $itemName . ' already exist. Please try diffrent name';
@@ -181,8 +189,9 @@ class Item extends BaseController
     public function generate_items_auto_barcode() {
         $items = $this->Itemmodel->all_items(-1,0);
         foreach ($items as $row) {
-            if ($row->barcode == '') {
-                $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
+            if ($row->barcode != '') {
+                $this->Commonmodel->generateProductBarcode($new_barcode);
+                // $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
             }
         }
 
@@ -190,14 +199,24 @@ class Item extends BaseController
     }
 
     public function update_barcode(){
-        $old_barcode = $this->request->getVar('old_barcode');
-        $new_barcode = $this->request->getVar('new_barcode');
+        $item_id = $this->request->getVar('item_id');
+        $old_barcode = trim($this->request->getVar('old_barcode'));
+        $new_barcode = trim($this->request->getVar('new_barcode'));
+
+        $not_in_cols = array('itemsId' => $item_id);
+        $duplicate_check = $this->Commonmodel->Duplicate_check(array('barcode' => $new_barcode),'saimtech_items', $not_in_cols);
+        // echo $duplicate_check; die;
+        if ($duplicate_check) {
+            $result = array('success' =>  false, 'msg' => 'Barcode already exist. Please try with different barcode!');
+            return $this->response->setJSON($result);
+            exit();
+        }
         if (strlen($new_barcode) < 3) {
             $result = array('success' =>  false, 'msg' => 'Barcode should be at least three characters!');
             return $this->response->setJSON($result);
             exit();
         }
-        $this->Commonmodel->update_record(array('barcode' => $new_barcode),array('barcode' => $old_barcode), 'saimtech_items');
+        $this->Commonmodel->update_record(array('barcode' => $new_barcode),array('itemsId' => $item_id), 'saimtech_items');
         $this->Commonmodel->generateProductBarcode($new_barcode, 'code128', false);
         
         $result = array('success' =>  true);

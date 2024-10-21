@@ -16,6 +16,16 @@ if (SITE == 'local') {
     define('WEBROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 }
 
+$link = LIVE_URL.'pdf/' . $barcode . '.png';
+
+
+$headers = @get_headers($link);
+if ($headers && strpos($headers[0], '200') !== false) {
+	
+} else {
+	$this->Commonmodel->generateProductBarcode($barcode);
+}
+
 for ($x = 1; $x <= $qty; $x++) {
 $this->fpdf->AddPage('L', [35, 50], 0);
 $margin = 1.5;
@@ -29,7 +39,8 @@ $this->fpdf->SetFont('Calibrib', '', 6);
 $this->fpdf->Cell(0,-5,$item->itemName,0,2,'C');
 
 // $link = $this->Commonmodel->generateProductBarcode('7941GRN-100888');
-$link = $this->Commonmodel->generateProductBarcode($barcode);
+
+// echo $link; die;
 // $this->fpdf->Image($link, 4, 12, 45);	
 $this->fpdf->Image($link, 4, 12, 45, 20);  // 45 width, 20 height
 

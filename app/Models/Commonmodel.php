@@ -33,6 +33,7 @@ class Commonmodel extends Model {
     }
 
     public function Duplicate_check($condition_cols, $tablename, $not_in_cols = ''){
+            // echo print_r($not_in_cols);die;
         $builder = $this->db->table($tablename);
 
        if (is_array($condition_cols)) {
@@ -48,6 +49,7 @@ class Commonmodel extends Model {
        }
 
         $rows = $builder->get()->getNumRows(); 
+        // print_r($this->db->getLastQuery()->getQuery());die;
         return  $rows;
           
     }
@@ -320,7 +322,7 @@ class Commonmodel extends Model {
         //
     }
    
-    public function generateProductBarcode($text, $type = 'code128', $unlink = true) {
+    public function generateProductBarcode($text, $type = 'code128', $unlink = false) {
         if ($unlink) {
             $files = glob('pdf/*'); // get all file names
             foreach($files as $file) { // iterate files
@@ -340,32 +342,34 @@ class Commonmodel extends Model {
               'factor' => 2,  // Scaling factor to control the overall size
           ];
 
-        // $barcodeOptions = [
-        //     'text' => $text, 
-        //     'barHeight' => 60, 
-        //     'barThickWidth' => 6, 
-        //     'stretchText' => false,
-        //     'drawText' => true, 
-        //     'fontSize' => 14,
-        //     'factor' => 0.9,
-        // ];
+        $url = APIURL;
+        $params = array('text' => $text, 'type' => $type, 'barcodeOptions' => $barcodeOptions); 
 
-        // No required options.
-        $rendererOptions = array();
-        $barcode = Barcode::factory(
-            $type,
-            'image',
-            $barcodeOptions,
-            $rendererOptions
-        )->draw();
-        // $file = $barcode->draw();
-        imagepng($barcode, "pdf/{$text}.png");
+        $response = $this->sendCurl($url, $params);
+        return $response;
 
-        // Ensure the image is resized to fit within your predefined space
-        // $this->resizeBarcodeImage("pdf/{$text}.png", 45, 20);  // Example dimensions (width, height)
+    }
 
-        return 'pdf/' . $text . '.png';
-        // dd($file);
+    // generic functions - start
+    public function sendCurl($url, $params = array()) {
+        $data = http_build_query($params);
+        $getUrl = $url . '?' . $data;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        if (curl_error($ch)) {
+            echo 'Request Error:' . curl_error($ch);
+            exit;
+        }
+
+        curl_close($ch);
+
+        return $response;
     }
 
     // Function to resize the barcode image

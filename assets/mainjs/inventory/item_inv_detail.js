@@ -34,6 +34,7 @@ $(document).ready(function(){
 		    },
 	    	"columns": [
 		        { "data": "sr" },
+		        { "data": "inventory_code" },
 		        { "data": "inventory_qty" },
 		        { "data": "purchase_price" },
 		        { "data": "sale_price" },

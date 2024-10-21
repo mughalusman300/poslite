@@ -177,7 +177,16 @@ class Inventory extends BaseController
             $data['item'] = $row;
 
             $data['barcode'] = $row->barcode;
-            $this->Commonmodel->generateProductBarcode($row->barcode);
+
+            $link = LIVE_URL.'pdf/' . $row->barcode . '.png';
+
+
+            $headers = @get_headers($link);
+            if ($headers && strpos($headers[0], '200') !== false) {
+                
+            } else {
+                $this->Commonmodel->generateProductBarcode($row->barcode);
+            }
             // ddd($row);
 
         } else {
@@ -211,8 +220,8 @@ class Inventory extends BaseController
 
             $i = 1;
             foreach ($items as $row) {   
-
                 $nestedData['sr'] = $i;
+                $nestedData['inventory_code'] = $row->inventory_code;                
                 $nestedData['inventory_qty'] = $row->inventory_qty;                
                 $nestedData['purchase_price'] = $row->purchase_price;                
                 $nestedData['sale_price'] =  $row->sale_price;  

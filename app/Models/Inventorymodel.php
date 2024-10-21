@@ -74,8 +74,10 @@ class Inventorymodel extends Model {
 
     public function all_inv_detail($item_id, $limit, $start){  
         $builder = $this->db->table('saimtech_inventory_detail'); 
-
         $builder->select('saimtech_inventory_detail.*');
+        $builder->select('saimtech_inventory.inventory_code');
+
+        $builder->join('saimtech_inventory', 'saimtech_inventory_detail.inventory_id = saimtech_inventory.inventory_id', 'inner');
         $builder->where('item_id', $item_id);
 
         if ($limit == -1){
@@ -93,9 +95,14 @@ class Inventorymodel extends Model {
         $builder = $this->db->table('saimtech_inventory_detail'); 
 
         $builder->select('saimtech_inventory_detail.*');
+        $builder->select('saimtech_inventory.inventory_code');
+
+        $builder->join('saimtech_inventory', 'saimtech_inventory_detail.inventory_id = saimtech_inventory.inventory_id', 'inner');
+
         $builder->where('item_id', $item_id);
 
         $builder->groupStart();
+            $builder->like('inventory_code', $search);
             $builder->like('purchase_price', $search);
             $builder->orLike('sale_price', $search);
         $builder->groupEnd();
@@ -109,12 +116,16 @@ class Inventorymodel extends Model {
         if ($limit == -1) {
             $limit = 12546464646464646;
         }
-        $builder = $this->db->table('saimtech_inventory_detail'); 
+        $builder = $this->db->table('saimtech_inventory_detail');
+        $builder->select('saimtech_inventory.inventory_code');
 
+        $builder->join('saimtech_inventory', 'saimtech_inventory_detail.inventory_id = saimtech_inventory.inventory_id', 'inner');
+        
         $builder->select('saimtech_inventory_detail.*');
         $builder->where('item_id', $item_id);
 
         $builder->groupStart();
+            $builder->like('inventory_code', $search);
             $builder->like('purchase_price', $search);
             $builder->orLike('sale_price', $search);
         $builder->groupEnd();
