@@ -45,28 +45,44 @@
 							<div class="col-md-11">
 								<div class="row">
 
-									<div class="col-3">
+									<div class="col-2 pe-1">
 										<label class="form-label">Item <span class="text-danger">*</span></label>
 										<select name="item_id[]" class="form-control validate-input select select2 item_id">
 											<option value="">Select Item</option>
 											<?php foreach($items as $row) :?>
-												<option value="<?= $row->itemsId ?>"><?= $row->itemName  ?></option>
+												<option value="<?= $row->itemsId ?>" 
+													data-prev_purchase_price="<?= $row->purchasePrice ?>"
+													data-prev_sale_price="<?= $row->salePrice ?>"
+													data-prev_inventory_qty="<?= $row->qty ?>"
+												>
+													<?= $row->itemName  ?>
+												</option>
 											<?php endforeach; ?>
 										</select>
 									</div>
 
-
-
-									<div class="col-md-3">
-										<label for="purchase_price" class="form-label">Purchase Price</label> <span class="color-red">*</span>
+									<div class="col-md-2 pe-1">
+										<label for="prev_purchase_price" class="form-label">Prev purch Price</label> <span class="color-red">*</span>
+										<input type="text" class="form-control validate-input prev_purchase_price twodecimel pe-1" readonly="" placeholder="0.00" name="prev_purchase_price[]" id="prev_purchase_price" value="" >
+									</div>
+									<div class="col-md-2 pe-1">
+										<label for="prev_sale_price" class="form-label">Prev Sale Price</label> <span class="color-red">*</span>
+										<input type="text" readonly="" class="form-control validate-input prev_sale_price twodecimel" placeholder="0.00" name="prev_sale_price[]" id="prev_sale_price" value="" >
+									</div>
+									<div class="col-md-1 pe-1">
+										<label for="prev_inventory_qty" class="form-label">Prev Qty</label> <span class="color-red">*</span>
+										<input type="text" readonly="" class="form-control validate-input prev_inventory_qty number" placeholder="0" name="prev_inventory_qty[]" id="prev_inventory_qty" value="" >
+									</div>
+									<div class="col-md-2 pe-1">
+										<label for="purchase_price" class="form-label">Curr Purch Price</label> <span class="color-red">*</span>
 										<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="" >
 									</div>
-									<div class="col-md-3">
-										<label for="sale_price" class="form-label">Sale Price</label> <span class="color-red">*</span>
+									<div class="col-md-2 pe-1">
+										<label for="sale_price" class="form-label">Curr Sale Price</label> <span class="color-red">*</span>
 										<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="" >
 									</div>
-									<div class="col-md-3">
-										<label for="inventory_qty" class="form-label">Quantity</label> <span class="color-red">*</span>
+									<div class="col-md-1 pe-1">
+										<label for="inventory_qty" class="form-label">Curr Qty</label> <span class="color-red">*</span>
 										<input type="text" class="form-control validate-input inventory_qty number" placeholder="0" name="inventory_qty[]" id="inventory_qty" value="" >
 									</div>
 								</div>
@@ -104,24 +120,38 @@
 				<div class="col-md-11">
 					<div class="row">
 
-						<div class="col-3">
+						<div class="col-2">
 							<select name="item_id[]" class="form-control validate-input select item_id">
 								<option value="">Select Item</option>
 								<?php foreach($items as $row) :?>
-									<option value="<?= $row->itemsId ?>"><?= $row->itemName  ?></option>
+									<option value="<?= $row->itemsId ?>" 
+										data-prev_purchase_price="<?= $row->purchasePrice ?>"
+										data-prev_sale_price="<?= $row->salePrice ?>"
+										data-prev_inventory_qty="<?= $row->qty ?>"
+									>
+										<?= $row->itemName  ?>
+									</option>
 								<?php endforeach; ?>
 							</select>
 						</div>
 
 
-
-						<div class="col-md-3">
+						<div class="col-md-2 pe-1">
+							<input type="text" readonly="" class="form-control validate-input prev_purchase_price twodecimel pe-1" placeholder="0.00" name="prev_purchase_price[]" id="prev_purchase_price" value="" >
+						</div>
+						<div class="col-md-2 pe-1">
+							<input type="text" readonly="" class="form-control validate-input prev_sale_price twodecimel" placeholder="0.00" name="prev_sale_price[]" id="prev_sale_price" value="" >
+						</div>
+						<div class="col-md-1 pe-1">
+							<input type="text" readonly="" class="form-control validate-input prev_inventory_qty number" placeholder="0" name="prev_inventory_qty[]" id="prev_inventory_qty" value="" >
+						</div>
+						<div class="col-md-2 pe-1">
 							<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="" >
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2 pe-1">
 							<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="" >
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-1 pe-1">
 							<input type="text" class="form-control validate-input inventory_qty number" placeholder="0" name="inventory_qty[]" id="inventory_qty" value="" >
 						</div>
 					</div>

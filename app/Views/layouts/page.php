@@ -8,7 +8,7 @@
 <body>
     <!-- BEGIN #app -->
     <?php 
-    if (in_array($main_content, array('inventory/inventoryin')) || in_array($main_content, array('inventory/inventoryout'))):?>
+    if (in_array($main_content, array('inventory/add_inventory')) || in_array($main_content, array('inventory/detail'))):?>
         <div id="app" class="app app-sidebar-minified">
     <?php else:?>
         <div id="app" class="app">

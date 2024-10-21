@@ -48,7 +48,7 @@
 							<div class="col-md-10">
 								<div class="row">
 
-									<div class="col-3">
+									<div class="col-2">
 										<?php if($i == 1) { ?>
 											<label class="form-label">Item</label>
 										<?php }?>
@@ -63,20 +63,37 @@
 									</div>
 
 
-
-									<div class="col-md-3">
+									<div class="col-md-2">
+										<?php if($i == 1) { ?>
+											<label class="form-label">Prev Purch Price</label>
+										<?php }?>
+										<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="<?= $detail->prev_purchase_price ?>" readonly>
+									</div>
+									<div class="col-md-2">
+										<?php if($i == 1) { ?>
+											<label class="form-label">Prev Sale Price</label>
+										<?php }?>
+										<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="<?= $detail->prev_sale_price ?>" readonly>
+									</div>
+									<div class="col-md-1">
+										<?php if($i == 1) { ?>
+											<label class="form-label">Prev Qty</label>
+										<?php }?>
+										<input type="text" class="form-control validate-input inventory_qty number" placeholder="0" name="inventory_qty[]" id="inventory_qty" value="<?= $detail->prev_inventory_qty ?>" readonly>
+									</div>
+									<div class="col-md-2">
 										<?php if($i == 1) { ?>
 											<label class="form-label">Purchase Price</label>
 										<?php }?>
 										<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="<?= $detail->purchase_price ?>" readonly>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<?php if($i == 1) { ?>
 											<label class="form-label">Sale Price</label>
 										<?php }?>
 										<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="<?= $detail->sale_price ?>" readonly>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-1">
 										<?php if($i == 1) { ?>
 											<label class="form-label">Quantity</label>
 										<?php }?>

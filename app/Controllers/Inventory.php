@@ -99,7 +99,10 @@ class Inventory extends BaseController
 
                     $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId ' => $item_id)), 'saimtech_items');
 
-                    $detail_data['previous_qty'] = $item->qty;
+                    $detail_data['prev_purchase_price'] = $this->request->getVar("prev_purchase_price")[$key];
+                    $detail_data['prev_sale_price'] = $this->request->getVar("prev_sale_price")[$key];
+                    // $detail_data['prev_inventory_qty'] = $this->request->getVar("prev_inventory_qty")[$key];
+                    $detail_data['prev_inventory_qty'] = $item->qty;
                     $detail_data['inventory_id'] = $inventory_id;
                     $detail_data['supplier_id'] = 1;
                     $detail_data['created_by'] = $_SESSION['user_id'];
@@ -116,7 +119,7 @@ class Inventory extends BaseController
                 
 
                 session()->setFlashdata('message', 'Inventory added successfully.');
-                return redirect()->to('/detail/'.$inventory_id.'/');
+                return redirect()->to('/inventory/detail/'.$inventory_id.'/');
             }
 
         } else {
