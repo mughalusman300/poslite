@@ -13,6 +13,7 @@ class Api extends BaseController
         $this->Commonmodel = new Commonmodel();
         $this->db      = \Config\Database::connect(); 
         $session = \Config\Services::session();
+       
         helper('custom_helper');
        
     }
@@ -43,7 +44,7 @@ class Api extends BaseController
         $dataLog['success']      = $v_success; 
         $dataLog['error']        = $v_error; 
         $dataLog['process']      = 1;
-        $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationLogs');
+        $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationlogs');
         //-------------------
         
         echo json_encode($data); 
@@ -66,10 +67,11 @@ class Api extends BaseController
                 $v_itemArray;
                 foreach ($items as $rows)
                 {
-                    $v_itemArray['id'] = $rows->itemsId;
-                    $v_itemArray['name'] = $rows->itemName;
-                    $v_itemArray['price'] = $rows->salePrice;
-                    $v_itemArray['disc'] = $rows->discount;
+                    $v_itemArray['id']      = $rows->itemsId;
+                    $v_itemArray['name']    = $rows->itemName;
+                    $v_itemArray['price']   = $rows->salePrice;
+                    $v_itemArray['disc']    = $rows->discount;
+                    $v_itemArray['barcode'] = $rows->barcode;
                     array_push($v_itemMain, $v_itemArray);
                 }
             }
@@ -93,7 +95,7 @@ class Api extends BaseController
         $dataLog['success'] = $v_success; 
         $dataLog['error']   = $v_error; 
         $dataLog['process'] = 1;
-        $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationLogs');
+        $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationlogs');
         //-------------------
         
         echo json_encode($data); 
@@ -120,7 +122,7 @@ class Api extends BaseController
         $dataLog['success'] = 0; 
         $dataLog['error']   = 1; 
         $dataLog['process'] = 0;
-        $integration_logs_id = $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationLogs');
+        $integration_logs_id = $this->Commonmodel->insert_record($dataLog, 'saimtech_integrationlogs');
         // save transactoins data log
 
         $user = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('key' => $key )), 'saimtech_users');
@@ -225,7 +227,7 @@ class Api extends BaseController
             $dataLog = array();
             $dataLog['success'] = 1; 
             $dataLog['error']   = 0; 
-            $this->Commonmodel->update_record($dataLog, array('id' => $integration_logs_id), 'saimtech_integrationLogs');
+            $this->Commonmodel->update_record($dataLog, array('id' => $integration_logs_id), 'saimtech_integrationlogs');
         }
         $this->db->transComplete();
 
