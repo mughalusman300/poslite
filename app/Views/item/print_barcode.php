@@ -18,6 +18,8 @@ if (SITE == 'local') {
 
 $link = LIVE_URL.'pdf/' . $barcode . '.png';
 
+$price = 'Price: '.$item->salePrice.' Rs/-';
+
 
 $headers = @get_headers($link);
 if ($headers && strpos($headers[0], '200') !== false) {
@@ -27,16 +29,17 @@ if ($headers && strpos($headers[0], '200') !== false) {
 }
 
 for ($x = 1; $x <= $qty; $x++) {
-$this->fpdf->AddPage('L', [35, 50], 0);
+$this->fpdf->AddPage('L', [35, 53], 0);
 $margin = 1.5;
 // $this->fpdf->SetDrawColor(28, 167, 79);
-// $this->fpdf->DashedRect( $margin, $margin , 53 - $margin , 53 - $margin,0.3);
+// $this->fpdf->DashedRect( $margin, $margin , 53 - $margin , 35 - $margin,0.3);
 // $this->fpdf->SetTextColor(35, 31, 32);
 $this->fpdf->SetTitle('Barcode Label');
 // $this->fpdf->SetAutoPageBreak(false);
 
-$this->fpdf->SetFont('Calibrib', '', 6);
-$this->fpdf->Cell(0,-5,$item->itemName,0,2,'C');
+$this->fpdf->SetFont('Calibrib', '', 7);
+$this->fpdf->Cell(0,-3,$item->itemName,0,5,'C');
+$this->fpdf->Cell(0,-4,$price,0,5,'C');
 
 // $link = $this->Commonmodel->generateProductBarcode('7941GRN-100888');
 

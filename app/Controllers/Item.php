@@ -187,10 +187,14 @@ class Item extends BaseController
     }
 
     public function generate_items_auto_barcode() {
+        ini_set('memory_limit', '2048M');
+
+        set_time_limit(0);
+
         $items = $this->Itemmodel->all_items(-1,0);
         foreach ($items as $row) {
             if ($row->barcode != '') {
-                $this->Commonmodel->generateProductBarcode($new_barcode);
+                $this->Commonmodel->generateProductBarcode($row->barcode, 'code128', true);
                 // $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
             }
         }

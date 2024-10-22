@@ -8,6 +8,7 @@ $this->Commonmodel = new Commonmodel();
 			<table id="barcode-table" class="table text-nowrap w-100">
 				<thead class="w-100">
 					<tr>
+						<th  style="">Item</th>
 						<th>Barcode</th>
 						<th>Barcode Text</th>
 						<th>Qty</th>
@@ -17,7 +18,11 @@ $this->Commonmodel = new Commonmodel();
 				</thead>
 				<tbody>
 					<tr>
-						<td>
+						<td  style="text-wrap: balance; ">
+							<!-- <input type="text" readonly="" class="form-control" value="<?= $item->itemName ?>" /> -->
+							<?= $item->itemName ?>
+						</td>
+						<td class="pb-0">
 							<?php 
 								$barcode = $item->barcode;
 								$full_barcode = $barcode;
@@ -33,7 +38,7 @@ $this->Commonmodel = new Commonmodel();
 
 							?>
 
-							<img style="max-width: 185px; max-height: 70px;" class="barcode-img" src="<?= LIVE_URL?>pdf/<?= $barcode?>.png" alt="barcode">
+							<img style="max-width: 150px; max-height: 70px;" class="barcode-img" src="<?= LIVE_URL?>pdf/<?= $barcode?>.png" alt="barcode">
 						</td>
 						<td>
 							<input type="text" class="form-control validate-input uppercase new_barcode" value="<?= $barcode ?>" />
@@ -41,7 +46,7 @@ $this->Commonmodel = new Commonmodel();
 						<td>
 							<input type="hidden" class="item_id" value="<?=$item->itemsId ?>">
 							<input type="hidden" class="barcode old_barcode" value="<?=$barcode ?>">
-							<input type="number" class="form-control validate-input barcode_qty number w-100px" min="1" max="100" placeholder="1" value="1" required="">
+							<input type="number" class="form-control validate-input barcode_qty number w-70px" min="1" max="100" placeholder="1" value="1" required="">
 						</td>
 						<td>
 							<button type="button" class="btn btn-theme mb-1 print">Print</button>

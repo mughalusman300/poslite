@@ -327,23 +327,24 @@ class Commonmodel extends Model {
             $files = glob('pdf/*'); // get all file names
             foreach($files as $file) { // iterate files
                 if (is_file($file)) {
-                    unlink($file); // delete file
+                    // unlink($file); // delete file
                 }
             }
         }
-        
-        $barcodeOptions = [ // by setting following configuration achive the max high as static
-              'text' => $text,
-              'barHeight' => 40,  // Static bar height to prevent overflow
-              'barThickWidth' => 2, // Adjust the thickness of bars to control width
-              'stretchText' => false,
-              'drawText' => true,
-              'fontSize' => 10,  // Smaller font size to fit within dimensions
-              'factor' => 2,  // Scaling factor to control the overall size
-          ];
+        $barcodeOptions = array('text' => $text, 'factor' => 1, 'barHeight' => 26, 'withQuietZones' => false);
+
+        // $barcodeOptions = [ // by setting following configuration achive the max high as static
+        //       'text' => $text,
+        //       'barHeight' => 40,  // Static bar height to prevent overflow
+        //       'barThickWidth' => 2, // Adjust the thickness of bars to control width
+        //       'stretchText' => false,
+        //       'drawText' => true,
+        //       'fontSize' => 10,  // Smaller font size to fit within dimensions
+        //       'factor' => 2,  // Scaling factor to control the overall size
+        //   ];
 
         $url = APIURL;
-        $params = array('text' => $text, 'type' => $type, 'barcodeOptions' => $barcodeOptions); 
+        $params = array('text' => $text, 'type' => $type, 'barcodeOptions' => $barcodeOptions, 'unlink' => $unlink); 
 
         $response = $this->sendCurl($url, $params);
         return $response;
