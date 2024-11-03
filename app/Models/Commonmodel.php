@@ -331,7 +331,7 @@ class Commonmodel extends Model {
                 }
             }
         }
-        $barcodeOptions = array('text' => $text, 'factor' => 1, 'barHeight' => 26, 'withQuietZones' => false);
+        $barcodeOptions = array('text' => $text, 'factor' => 1, 'barHeight' => 30, 'withQuietZones' => false);
 
         // $barcodeOptions = [ // by setting following configuration achive the max high as static
         //       'text' => $text,
@@ -411,12 +411,15 @@ class Commonmodel extends Model {
     }
 
     public function generateItemAutoBarcode($itemsId) {
-        $first_code= $this->getBarcode(3);
-        $second_code = "INV-";
-        $third_code= $this->getBarcode(7);
 
-        $barcode = $first_code.$second_code.$third_code;
+        do {
+            $barcode= $this->getBarcode(11);
+            $already_barcode_row = $this->getRows(array('returnType' => 'single', 'conditions' => array('barcode' => $barcode)), 'saimtech_items');
+        } while ($already_barcode_row);
+
         $this->update_record(array('barcode' => $barcode),array('itemsId' => $itemsId), 'saimtech_items');
+
+        return $barcode;
     }
 
 

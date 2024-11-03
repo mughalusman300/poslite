@@ -193,9 +193,9 @@ class Item extends BaseController
 
         $items = $this->Itemmodel->all_items(-1,0);
         foreach ($items as $row) {
-            if ($row->barcode != '') {
-                $this->Commonmodel->generateProductBarcode($row->barcode, 'code128', true);
-                // $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
+            if ($row->barcode == '') {
+                $barcode = $this->Commonmodel->generateItemAutoBarcode($row->itemsId);
+                $this->Commonmodel->generateProductBarcode($barcode, 'code128', true);
             }
         }
 

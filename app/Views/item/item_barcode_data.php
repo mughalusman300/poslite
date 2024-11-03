@@ -33,7 +33,7 @@ $this->Commonmodel = new Commonmodel();
 								if ($headers && strpos($headers[0], '200') !== false) {
 									
 								} else {
-									$this->Commonmodel->generateProductBarcode($barcode, 'code128');
+									$this->Commonmodel->generateProductBarcode($barcode, 'code128', true);
 								}
 
 							?>

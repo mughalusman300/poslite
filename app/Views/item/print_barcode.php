@@ -29,7 +29,7 @@ if ($headers && strpos($headers[0], '200') !== false) {
 }
 
 for ($x = 1; $x <= $qty; $x++) {
-$this->fpdf->AddPage('L', [35, 53], 0);
+$this->fpdf->AddPage('P', [47, 50], 0); // left W, Right H
 $margin = 1.5;
 // $this->fpdf->SetDrawColor(28, 167, 79);
 // $this->fpdf->DashedRect( $margin, $margin , 53 - $margin , 35 - $margin,0.3);
@@ -45,7 +45,7 @@ $this->fpdf->Cell(0,-4,$price,0,5,'C');
 
 // echo $link; die;
 // $this->fpdf->Image($link, 4, 12, 45);	
-$this->fpdf->Image($link, 4, 12, 45, 20);  // 45 width, 20 height
+$this->fpdf->Image($link, 1, 12, 45, 20);  // 45 width, 20 height
 
 }
 
