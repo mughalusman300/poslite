@@ -29,7 +29,7 @@ if ($headers && strpos($headers[0], '200') !== false) {
 }
 
 for ($x = 1; $x <= $qty; $x++) {
-$this->fpdf->AddPage('P', [47, 50], 0); // left W, Right H
+$this->fpdf->AddPage('P', [60, 50], 0); // left W, Right H
 $margin = 1.5;
 // $this->fpdf->SetDrawColor(28, 167, 79);
 // $this->fpdf->DashedRect( $margin, $margin , 53 - $margin , 35 - $margin,0.3);
@@ -37,15 +37,16 @@ $margin = 1.5;
 $this->fpdf->SetTitle('Barcode Label');
 // $this->fpdf->SetAutoPageBreak(false);
 
-$this->fpdf->SetFont('Calibrib', '', 7);
-$this->fpdf->Cell(0,-3,$item->itemName,0,5,'C');
-$this->fpdf->Cell(0,-4,$price,0,5,'C');
+$this->fpdf->SetFont('Calibrib', '', 14);
+$this->fpdf->Cell(0, -5, strtoupper($price), 0, 5, 'C');
+$this->fpdf->Cell(0, -4, strtoupper($item->itemName), 0, 5, 'C');
+
 
 // $link = $this->Commonmodel->generateProductBarcode('7941GRN-100888');
 
 // echo $link; die;
 // $this->fpdf->Image($link, 4, 12, 45);	
-$this->fpdf->Image($link, 1, 12, 45, 20);  // 45 width, 20 height
+$this->fpdf->Image($link, 3, 12, 45, 20);  // 45 width, 20 height
 
 }
 

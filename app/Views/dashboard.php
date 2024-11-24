@@ -19,7 +19,7 @@
                             <div class="card-body">
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
-                                        <h5 class="mb-1">Total Users</h5>
+                                        <h5 class="mb-1">Total Items</h5>
                                         <div>Store user account registration</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
@@ -47,7 +47,7 @@
                             <div class="card-body">
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
-                                        <h5 class="mb-1">Social Media</h5>
+                                        <h5 class="mb-1">Accounts</h5>
                                         <div>Facebook page stats overview</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
@@ -61,7 +61,7 @@
                                             <i class="fa fa-thumbs-up fa-lg text-primary"></i>
                                         </div>
                                         <div class="fw-600 text-body">306.5k</div>
-                                        <div class="fs-13px">Likes</div>
+                                        <div class="fs-13px">Payable</div>
                                     </div>
                                     <!-- END col-6 -->
                                     
@@ -71,7 +71,7 @@
                                             <i class="fa fa-comments fa-lg text-primary"></i>
                                         </div>
                                         <div class="fw-600 text-body">27.5k</div>
-                                        <div class="fs-13px">Comments</div>
+                                        <div class="fs-13px">Recievable</div>
                                     </div>
                                     <!-- END col-6 -->
                                 </div>
@@ -91,16 +91,16 @@
                             <div class="card-body">
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
-                                        <h5 class="mb-1">Web Traffic</h5>
-                                        <div class="fs-13px">Traffic source and category</div>
+                                        <h5 class="mb-1">Sales Source</h5>
+                                        <div class="fs-13px">Traffic source</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <h3 class="mb-1">320,958</h3>
+                                    <h3 class="mb-1">320,958</h3> <!-- this is total sale of current month -->
                                     <div class="text-success fs-13px fw-600">
-                                        <i class="fa fa-caret-up"></i> +20.9%
+                                        <i class="fa fa-caret-up"></i> +20.9% <!-- comaprision with last month -->
                                     </div>
                                 </div>
                                 
@@ -115,35 +115,29 @@
                                 <div class="fs-13px">
                                     <div class="d-flex align-items-center mb-2">
                                         <div class="flex-grow-1 d-flex align-items-center">
-                                            <i class="fa fa-circle fs-9px fa-fw text-primary me-2"></i> Direct visit
+                                            <i class="fa fa-circle fs-9px fa-fw text-primary me-2"></i> Store Counter
                                         </div>
                                         <div class="fw-600 text-body">42.66%</div>
                                     </div>
                                     <div class="d-flex align-items-center mb-2">
                                         <div class="flex-grow-1 d-flex align-items-center">
-                                            <i class="fa fa-circle fs-9px fa-fw text-teal me-2"></i> Organic Search
+                                            <i class="fa fa-circle fs-9px fa-fw text-teal me-2"></i> Online Store
                                         </div>
                                         <div class="fw-600 text-body">36.80%</div>
                                     </div>
                                     <div class="d-flex align-items-center mb-2">
                                         <div class="flex-grow-1 d-flex align-items-center">
-                                            <i class="fa fa-circle fs-9px fa-fw text-warning me-2"></i> Referral Website
+                                            <i class="fa fa-circle fs-9px fa-fw text-warning me-2"></i> Referral
                                         </div>
                                         <div class="fw-600 text-body">15.34%</div>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="flex-grow-1 d-flex align-items-center">
-                                            <i class="fa fa-circle fs-9px fa-fw text-danger me-2"></i> Social Networks
-                                        </div>
-                                        <div class="fw-600 text-body">9.20%</div>
                                     </div>
                                     <div class="d-flex align-items-center mb-15px">
                                         <div class="flex-grow-1 d-flex align-items-center">
                                             <i class="fa fa-circle fs-9px fa-fw text-gray-200 me-2"></i> Others
                                         </div>
-                                        <div class="fw-600 text-body">5.00%</div>
+                                        <div class="fw-600 text-body">0.00%</div>
                                     </div>
-                                    <div class="fs-12px text-end">
+                                    <div class="fs-12px text-end d-none">
                                         <span class="fs-10px">powered by </span>
                                         <span class="d-inline-flex fw-600">
                                             <span class="text-primary">G</span>
@@ -200,8 +194,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-4">
                             <div class="flex-grow-1">
-                                <h5 class="mb-1">Bestseller</h5>
-                                <div class="fs-13px">Top 3 product sales this week</div>
+                                <h5 class="mb-1">Bestseller Items</h5>
+                                <div class="fs-13px">Top 5 product sales this month</div>
                             </div>
                             <a href="#" class="text-decoration-none">See All</a>
                         </div>
@@ -306,8 +300,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="flex-grow-1">
-                                <h5 class="mb-1">Transaction</h5>
-                                <div class="fs-13px">Latest transaction history</div>
+                                <h5 class="mb-1">Transaction Payment Mode</h5>
+                                <div class="fs-13px">This month transaction history</div>
                             </div>
                             <a href="#" class="text-decoration-none">See All</a>
                         </div>
