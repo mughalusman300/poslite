@@ -38,6 +38,42 @@
 
 			</div>
 			<div class="card-body">
+				<div class="parent-row">
+					<div class="row main-row mb-3 main-first-row">
+						<div class="col-md-10">
+							<div class="row">
+
+								<div class="col-2">
+										<label class="form-label">Item</label>
+								</div>
+
+
+								<div class="col-md-2">
+									<label class="form-label">Prev Purch Price</label>
+								</div>
+								<div class="col-md-2">
+									<label class="form-label">Prev Sale Price</label>
+								</div>
+								<div class="col-md-1">
+									<label class="form-label">Prev Qty</label>
+								</div>
+								<div class="col-md-2">
+									<label class="form-label">Purchase Price</label>
+								</div>
+								<div class="col-md-2">
+									<label class="form-label">Sale Price</label>
+								</div>
+								<div class="col-md-1">
+									<label class="form-label">Quantity</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-2">
+								<label for="Date" class="form-label" style="visibility: hidden">Date</label>
+						</div>
+					</div>
+				</div>
 				<?php 
 					$i = 0;
 					foreach ($details as $key => $detail) { 
@@ -49,9 +85,6 @@
 								<div class="row">
 
 									<div class="col-2">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Item</label>
-										<?php }?>
 										<select name="item_id[]" class="form-control validate-input select select2 item_id" disabled="">
 											<option value="">Select Item</option>
 											<?php foreach($items as $row) :?>
@@ -64,55 +97,39 @@
 
 
 									<div class="col-md-2">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Prev Purch Price</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="<?= $detail->prev_purchase_price ?>" readonly>
 									</div>
 									<div class="col-md-2">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Prev Sale Price</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="<?= $detail->prev_sale_price ?>" readonly>
 									</div>
 									<div class="col-md-1">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Prev Qty</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input inventory_qty number" placeholder="0" name="inventory_qty[]" id="inventory_qty" value="<?= $detail->prev_inventory_qty ?>" readonly>
 									</div>
 									<div class="col-md-2">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Purchase Price</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input purchase_price twodecimel" placeholder="0.00" name="purchase_price[]" id="purchase_price" value="<?= $detail->purchase_price ?>" readonly>
 									</div>
 									<div class="col-md-2">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Sale Price</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input sale_price twodecimel" placeholder="0.00" name="sale_price[]" id="sale_price" value="<?= $detail->sale_price ?>" readonly>
 									</div>
 									<div class="col-md-1">
-										<?php if($i == 1) { ?>
-											<label class="form-label">Quantity</label>
-										<?php }?>
 										<input type="text" class="form-control validate-input inventory_qty number" placeholder="0" name="inventory_qty[]" id="inventory_qty" value="<?= $detail->inventory_qty ?>" readonly>
 									</div>
 								</div>
 							</div>
 
 							<div class="col-md-2">
-								<?php if($i == 1) { ?>
-									<label for="Date" class="form-label" style="visibility: hidden">Date</label>
-								<?php }?>
-								
-								<button type="button" class="btn btn-outline-theme me-2 print-barcode" 
-									data-item_id="<?= $detail->item_id ?>"  
-									data-barcode="<?= $detail->barcode ?>"
-									data-inventory_qty="<?= $detail->inventory_qty ?>"
-									style="width: 180px;">Print Barcode <i class="fa fa-barcode" aria-hidden="true"></i>
-								</button>
+								<div>
+									<button type="button" class="btn btn-outline-theme me-2 print-barcode" 
+										data-item_id="<?= $detail->item_id ?>"  
+										data-barcode="<?= $detail->barcode ?>"
+										data-inventory_qty="<?= $detail->inventory_qty ?>"
+										style="width: 100px;">Barcode <i class="fa fa-barcode" aria-hidden="true"></i>
+									</button>
+									<button type="button" class="btn btn-outline-theme me-2 delete" 
+										data-inventory_detail_id="<?= $detail->inventory_detail_id ?>"
+										style="width: 80px;">Delete</i>
+									</button>
+								</div>
 							</div>
 
 						</div>

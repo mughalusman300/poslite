@@ -39,7 +39,8 @@ $routes->get('m2d', 'Api::mob_to_server');
 $routes->get('m2u', 'Api::update');
 
 ////////////Users Routes////////////////////////
-$routes->get('users', 'User::index',['filter' => 'Permission']);
+// $routes->get('users', 'Users::index',['filter' => 'Permission']);
+$routes->get('users', 'Users::index');
 $routes->post('create', 'User::store');
 $routes->post('User/update/(:id)', 'User::update/$1');
 $routes->post('create', 'User::store');

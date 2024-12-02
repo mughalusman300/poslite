@@ -76,7 +76,7 @@ class Item extends BaseController
                 $nestedData['sr'] = $i;
                 $nestedData['itemName'] = $row->itemName;
                 $nestedData['itemCategory'] = $row->itemCategory;
-                $nestedData['qty'] = $row->qty;
+                $nestedData['qty'] = $row->qty - $row->sale_qty;
                 $nestedData['purchasePrice'] = $row->purchasePrice;
                 $nestedData['salePrice'] = $row->salePrice;
                 $nestedData['discount'] = $row->discount;

@@ -167,6 +167,23 @@ class Inventory extends BaseController
     
     }
 
+    public function delete_detail_row() {
+        $inventory_detail_id = $this->request->getVar('inventory_detail_id');
+
+        $detail = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('inventory_detail_id' => $inventory_detail_id)), 'saimtech_inventory_detail');
+
+        $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $detail->item_id)), 'saimtech_items');
+
+        $update_item['qty'] = $item->qty - $detail->inventory_qty;
+        $this->Commonmodel->update_record($update_item,array('itemsId' => $item->itemsId), 'saimtech_items');
+
+        $this->Commonmodel->Delete_record('saimtech_inventory_detail', 'inventory_detail_id', $inventory_detail_id);
+
+        $result = array('success' =>  true);
+        return $this->response->setJSON($result);
+
+    }
+
     public function item_inv_detail($item_id){
         $data['title'] = 'Item Inventory Detail';
         $data['main_content'] = 'inventory/item_inv_detail';
@@ -213,6 +230,7 @@ class Inventory extends BaseController
 
         if (empty($search)) {
             $items = $this->Inventorymodel->all_inv_detail($item_id, $limit, $start);
+            // ddd($items);
         } else {
             $items =  $this->Inventorymodel->inv_detail_search($item_id, $limit, $start, $search);
             $totalFiltered = $this->Inventorymodel->inv_detail_search_count($item_id, $search);
@@ -223,6 +241,11 @@ class Inventory extends BaseController
 
             $i = 1;
             foreach ($items as $row) {   
+                $action = '<button type="button" class="btn btn-outline-theme me-2 delete" 
+                                        data-inventory_detail_id="'. $row->inventory_detail_id.'"
+                                        style="width: 80px;">Delete</i>
+                                    </button>';
+
                 $nestedData['sr'] = $i;
                 $nestedData['inventory_code'] = $row->inventory_code;                
                 $nestedData['inventory_qty'] = $row->inventory_qty;                
@@ -230,6 +253,9 @@ class Inventory extends BaseController
                 $nestedData['sale_price'] =  $row->sale_price;  
 
                 $nestedData['date'] =  date('d-m-Y h:i A',strtotime($row->created_at));  
+
+                $nestedData['action'] =  $action;  
+
 
                 $data[] = $nestedData;
 

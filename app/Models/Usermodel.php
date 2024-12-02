@@ -29,8 +29,8 @@ class Usermodel extends Model {
 
     public function users_search_count($search){
         $builder = $this->db->table('saimtech_users');
-        $builder->like('itemName', $search);
-        $builder->orLike('itemCategory', $search);
+        $builder->like('name', $search);
+        $builder->orLike('email', $search);
 
        $query = $builder->get();
     
@@ -43,8 +43,8 @@ class Usermodel extends Model {
         }
 
         $builder = $this->db->table('saimtech_users');
-        $builder->like('itemName', $search);
-        $builder->orLike('itemCategory', $search);
+        $builder->like('name', $search);
+        $builder->orLike('email', $search);
 
         $builder->limit($limit,$start);
         // $builder->order_by('category_id',"asc")

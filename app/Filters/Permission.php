@@ -11,7 +11,7 @@ class Permission implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = \Config\Services::session();
-        if(($session->get('user_power'))!="SE" && $session->get('user_id')!=""){
+        if(($session->get('user_power'))!="admin" && $session->get('user_id')!=""){
         	return redirect()->to('/unauthorized');
         }
         

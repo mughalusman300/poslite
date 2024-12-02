@@ -397,7 +397,7 @@ if ( ! function_exists('inventory_code'))
     }
 }
 if (!function_exists("ddd")) {
-    function ddd($array,  $die = true, $label = '') {
+    function ddd($array, $label = '', $die = true) {
         echo '<pre>';
         if ($label != '') {
             echo  $label .': ';

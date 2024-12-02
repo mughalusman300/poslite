@@ -22,7 +22,7 @@ class Inventorymodel extends Model {
             $limit = 12546464646464646;
         }
         $builder->limit($limit,$start);
-        // $this->db->order_by('category_id',"asc");
+        $builder->orderBy('saimtech_inventory.inventory_id',"desc");
         $query = $builder->get();  
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
         return $result; 
@@ -58,7 +58,7 @@ class Inventorymodel extends Model {
         $builder->groupEnd();
 
         $builder->limit($limit,$start);
-        // $builder->order_by('category_id',"asc")
+        $builder->orderBy('saimtech_inventory.inventory_id',"desc");
        $query = $builder->get();
     
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
@@ -68,6 +68,7 @@ class Inventorymodel extends Model {
     public function all_inv_detail_count($item_id){  
         $builder = $this->db->table('saimtech_inventory_detail');
         $builder->where('item_id', $item_id);
+        $builder->orderBy('inventory_detail_id', 'desc');
         $query = $builder->get(); 
         return $query->getNumRows();  
     }
@@ -84,6 +85,7 @@ class Inventorymodel extends Model {
             $limit = 12546464646464646;
         }
         $builder->limit($limit,$start);
+        $builder->orderBy('inventory_detail_id', 'desc');
         // $this->db->order_by('category_id',"asc");
         $query = $builder->get();  
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
@@ -107,6 +109,7 @@ class Inventorymodel extends Model {
             $builder->orLike('sale_price', $search);
         $builder->groupEnd();
 
+        $builder->orderBy('inventory_detail_id', 'desc');
         $query = $builder->get();
     
         return $query->getNumRows();
@@ -131,6 +134,7 @@ class Inventorymodel extends Model {
         $builder->groupEnd();
 
         $builder->limit($limit,$start);
+        $builder->orderBy('inventory_detail_id', 'desc');
         // $builder->order_by('category_id',"asc")
         $query = $builder->get();
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;

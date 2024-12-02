@@ -42,6 +42,8 @@ $(document).ready(function(){
 	}
 
 	$(document).on('click', '.add-user', function(){
+		$('input[name="permissions[]"]').prop('checked', false).trigger('change');
+		// $('input[name="permissions[]"]').attr('checked',false).trigger('change');
 		$('.users-modal').modal('show');
 		$('.save').data('type', 'add');
 		$('.save').text('Save');
@@ -59,25 +61,55 @@ $(document).ready(function(){
 		$('.name').val($(this).data('name'));
 		$('.email').val($(this).data('email'));
 		$('.power').val($(this).data('power'));
+		var permissions = $(this).attr('data-permissions').trim();
+		if (permissions != '') {
+			var permissionArray = permissions.split(','); // Convert to an array
+			
+			$('input[name="permissions[]"]').each(function () {
+			  var checkboxValue = $(this).val().trim(); // Get the value and trim any spaces
+			  if (permissionArray.includes(checkboxValue)) {
+			    console.log("Checking:", checkboxValue); // Debugging log
+			    $(this).prop('checked', true).trigger('change'); // Check and trigger change
+			  } else {
+			    console.log("Unchecking:", checkboxValue); // Debugging log
+			    $(this).prop('checked', false).trigger('change'); // Uncheck and trigger change
+			  }
+			});
+		} else {
+			$('input[name="permissions[]"]').prop('checked', false).trigger('change');
+		}
+
 		// $('.password').val($(this).data('password'));
 	});
 
 	$(document).on('click', '.save', function(){
 		var validate = checkValidation('.users-modal');
+		if ($('.users-modal').find('input[type="checkbox"]:checked').length == 0) {
+			validate = false;
+			Swal.fire('Permissions', 'Assign atleast one permission!', 'error');
+		}
+
 		if (validate) {
-			var type = $(this).data('type');
+			var type = $(this).attr('data-type');
 			var id = $('.id').val();
 			var name = $('.name').val();
 			var email = $('.email').val();
 			var power = $('.power').val();
 			var password = $('.password').val();
 
+			const permissions = $('input[name="permissions[]"]:checked')
+			    .map(function () {
+			      return $(this).val();
+			    })
+			    .get()
+			    .join(',');
+
 			if (type == 'add') {
-				var mydata = {type: type, name: name, email: email, power: power, password: password };
+				var mydata = {type: type, name: name, email: email, power: power, password: password, permissions: permissions };
 				var notify_title = 'User Add';
 				var notify_text = 'User Add successfully!';
 			} else {
-				var mydata = {type: type, id: id,  name: name, email: email, power: power, password: password };
+				var mydata = {type: type, id: id,  name: name, email: email, power: power, password: password, permissions: permissions };
 				var notify_title = 'User Updated';
 				var notify_text = 'User Updated successfully!';
 			}
@@ -103,12 +135,38 @@ $(document).ready(function(){
 
 	$('.users-modal').on('hidden.bs.modal', function (e) {
 		$('.users-modal').find('.modal-title').text('Add User');
-	    $('.users-modal').find('input').val('');
+	    $('.users-modal').find('input[type="text"]').val('');
 	    $('.users-modal').find('input').removeClass('is-invalid');
 	    $('.users-modal').find('select').val('');
 	    $('.users-modal').find('select').removeClass('is-invalid');
+	    $('input[name="permissions[]"]').attr('checked',false).trigger('change');
 	});
 
+	$(document).on('change', '.power', function(){
+		var power = $(this).val();
+		if(power == 'admin') {
+			$('input[name="permissions[]"]').prop('checked', true).trigger('change');
+			// $('input[name="permissions[]"]').attr('checked',true);
+		} else if(power == 'user') {
+			$('input[name="permissions[]"]').each(function () {
+			  if ($(this).hasClass('user')) {
+			    $(this).prop('checked', true).trigger('change');; // Check if it has the 'user' class
+			  } else {
+			    $(this).prop('checked', false).trigger('change');; // Uncheck if it doesn't have the 'user' class
+			  }
+			});
+		} else {
+			$('input[name="permissions[]"]').prop('checked',false).trigger('change');
+		}
+	});
+
+	$(document).on('change', '.allow_all_permissions', function(){
+		if ($(this).prop('checked')) {
+			$('input[name="permissions[]"]').prop('checked',true).trigger('change');
+		} else {
+			$('input[name="permissions[]"]').prop('checked',false).trigger('change');
+		}
+	})
 	$(document).on('click', '#is_enable', function(){
 		var id = $(this).attr('data-id');
 		console.log(id);

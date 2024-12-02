@@ -20,20 +20,20 @@
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
                                         <h5 class="mb-1">Total Items</h5>
-                                        <div>Store user account registration</div>
+                                        <div>Store Total Items</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
                                 </div>
                                 
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <h3 class="mb-1">184,593</h3>
+                                        <h3 class="mb-1"><?= $items ?></h3>
                                         <div class="text-success fw-600 fs-13px">
-                                            <i class="fa fa-caret-up"></i> +3.59%
+                                            <!-- <i class="fa fa-caret-up"></i> +3.59% -->
                                         </div>
                                     </div>
                                     <div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa fa-user fa-lg text-primary"></i>
+                                        <i class="fa fa-shopping-bag"></i>
                                     </div>
                                 </div>
                             </div>
@@ -91,17 +91,23 @@
                             <div class="card-body">
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
-                                        <h5 class="mb-1">Sales Source</h5>
-                                        <div class="fs-13px">Traffic source</div>
+                                        <h5 class="mb-1">Sales </h5>
+                                        <div class="fs-13px">Last 30 Days Sale</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <h3 class="mb-1">320,958</h3> <!-- this is total sale of current month -->
-                                    <div class="text-success fs-13px fw-600">
-                                        <i class="fa fa-caret-up"></i> +20.9% <!-- comaprision with last month -->
-                                    </div>
+                                    <h3 class="mb-1"><?= $sale ?></h3> <!-- this is total sale of current month -->
+                                    <?php if (strpos($sale_comaprision, '+') !== false): ?>
+                                        <div class="text-success fs-13px fw-600">
+                                            <i class="fa fa-caret-up"></i> <?= $sale_comaprision ?> <!-- comaprision with last month -->
+                                        </div>
+                                    <?php else:?>
+                                        <div class="text-danger fs-13px fw-600">
+                                            <i class="fa fa-caret-down"></i> <?= $sale_comaprision ?>  <!-- comaprision with last month -->
+                                        </div>
+                                    <?php endif;?>
                                 </div>
                                 
                                 <div class="progress mb-4" style="height: 10px;">
@@ -195,96 +201,39 @@
                         <div class="d-flex align-items-center mb-4">
                             <div class="flex-grow-1">
                                 <h5 class="mb-1">Bestseller Items</h5>
-                                <div class="fs-13px">Top 5 product sales this month</div>
+                                <div class="fs-13px">Top 5 product sales of last 30 days</div>
                             </div>
-                            <a href="#" class="text-decoration-none">See All</a>
+                            <a href="#" class="text-decoration-none d-none">See All</a>
                         </div>
                         
                         <!-- product-1 -->
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
-                                <img src="assets/img/product/product-1.jpg" alt="" class="ms-100 mh-100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div>
-                                    <div class="text-primary fs-10px fw-600">TOP SALES</div>
-                                    <div class="text-body fw-600">iPhone 11 Pro Max (256GB)</div>
-                                    <div class="fs-13px">$1,099</div>
-                                </div>
-                            </div>
-                            <div class="ps-3 text-center">
-                                <div class="text-body fw-600">382</div>
-                                <div class="fs-13px">sales</div>
-                            </div>
-                        </div>
+                            <?php if($best_sell_items) : ?>
+                                    <?php 
+                                        $counter = 1;
+                                        foreach($best_sell_items as $item) : ?>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+                                                    <img src="assets/img/product/product-1.jpg" alt="" class="ms-100 mh-100">
+                                                </div>
+
+                                                <div class="flex-grow-1">
+                                                    <div>
+                                                        <?php if($counter == 1) :?>
+                                                        <div class="text-primary fs-10px fw-600">TOP SALES</div>
+                                                        <?php endif; ?>
+                                                        <div class="text-body fw-600"><?= $item->itemName ?></div>
+                                                        <div class="fs-13px">RS/- <?= $item->salePrice ?></div>
+                                                    </div>
+                                                </div>
+                                                <div class="ps-3 text-center">
+                                                    <div class="text-body fw-600"><?= $item->total_quantity_sold ?></div>
+                                                    <div class="fs-13px">sales</div>
+                                                </div>
+                                            </div>
+                                    <?php $counter++;
+                                        endforeach; ?>
+                            <?php endif; ?>
                         
-                        <!-- product-2 -->
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
-                                <img src="assets/img/product/product-2.jpg" alt="" class="ms-100 mh-100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div>
-                                    <div class="text-body fw-600">Macbook Pro 13 inch (2021)</div>
-                                    <div class="fs-13px">$1,120</div>
-                                </div>
-                            </div>
-                            <div class="ps-3 text-center">
-                                <div class="text-body fw-600">102</div>
-                                <div class="fs-13px">sales</div>
-                            </div>
-                        </div>
-                        
-                        <!-- product-3 -->
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
-                                <img src="assets/img/product/product-3.jpg" alt="" class="ms-100 mh-100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div>
-                                    <div class="text-body fw-600">Apple Watch Series 4(2021)</div>
-                                    <div class="fs-13px">$349</div>
-                                </div>
-                            </div>
-                            <div class="ps-3 text-center">
-                                <div class="text-body fw-600">75</div>
-                                <div class="fs-13px">sales</div>
-                            </div>
-                        </div>
-                        
-                        <!-- product-4 -->
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
-                                <img src="assets/img/product/product-4.jpg" alt="" class="ms-100 mh-100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div>
-                                    <div class="text-body fw-600">12.9-inch iPad Pro (256GB)</div>
-                                    <div class="fs-13px">$1,099</div>
-                                </div>
-                            </div>
-                            <div class="ps-3 text-center">
-                                <div class="text-body fw-600">62</div>
-                                <div class="fs-13px">sales</div>
-                            </div>
-                        </div>
-                        
-                        <!-- product-5 -->
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
-                                <img src="assets/img/product/product-5.jpg" alt="" class="ms-100 mh-100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div>
-                                    <div class="text-body fw-600">iPhone 11 (128gb)</div>
-                                    <div class="fs-13px">$799</div>
-                                </div>
-                            </div>
-                            <div class="ps-3 text-center">
-                                <div class="text-body fw-600">59</div>
-                                <div class="fs-13px">sales</div>
-                            </div>
-                        </div>
                     </div>
                     <!-- END card-body -->
                 </div>
@@ -301,9 +250,9 @@
                         <div class="d-flex align-items-center mb-2">
                             <div class="flex-grow-1">
                                 <h5 class="mb-1">Transaction Payment Mode</h5>
-                                <div class="fs-13px">This month transaction history</div>
+                                <div class="fs-13px">Last 30 days transaction history</div>
                             </div>
-                            <a href="#" class="text-decoration-none">See All</a>
+                            <a href="#" class="text-decoration-none d-none">See All</a>
                         </div>
                         
                         <!-- BEGIN table-responsive -->
@@ -312,92 +261,33 @@
                                 <thead>
                                     <tr class="text-body">
                                         <th class="ps-0">No</th>
-                                        <th>Order Details</th>
-                                        <th class="text-center">Status</th>
+                                        <th>Payment Mode</th>
                                         <th class="text-end pe-0">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="ps-0">1.</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="w-40px h-40px">
-                                                    <img src="assets/img/icon/paypal2.svg" alt="" class="ms-100 mh-100">
-                                                </div>
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-600 text-body">Macbook Pro 15 inch</div>
-                                                    <div class="fs-13px">5 minutes ago</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Success</span></td>
-                                        <td class="text-end pe-0">$1,699.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-0">2.</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="w-40px h-40px rounded">
-                                                    <img src="assets/img/icon/mastercard.svg" alt="" class="ms-100 mh-100">
-                                                </div>
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-600 text-body">Apple Watch 5 Series</div>
-                                                    <div class="fs-13px">5 minutes ago</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Success</span></td>
-                                        <td class="text-end pe-0">$699.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-0">3.</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="w-40px h-40px rounded">
-                                                    <img src="assets/img/icon/visa.svg" alt="" class="ms-100 mh-100">
-                                                </div>
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-600 text-body">iPhone 11 Pro Max</div>
-                                                    <div class="fs-13px">12 minutes ago</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><span class="badge bg-warning bg-opacity-20 text-warning" style="min-width: 60px;">Pending</span></td>
-                                        <td class="text-end pe-0">$1,299.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-0">4.</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="w-40px h-40px rounded">
-                                                    <img src="assets/img/icon/paypal2.svg" alt="" class="ms-100 mh-100">
-                                                </div>
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-600 text-body">Apple Magic Keyboard</div>
-                                                    <div class="fs-13px">15 minutes ago</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><span class="badge text-body text-opacity-50 bg-dark bg-opacity-10" style="min-width: 60px;">Cancelled</span></td>
-                                        <td class="text-end pe-0">$199.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-0">5.</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="w-40px h-40px rounded">
-                                                    <img src="assets/img/icon/mastercard.svg" alt="" class="ms-100 mh-100">
-                                                </div>
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-600 text-body">iPad Pro 15 inch</div>
-                                                    <div class="fs-13px">15 minutes ago</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"><span class="badge bg-success bg-opacity-20 text-success" style="min-width: 60px;">Cancelled</span></td>
-                                        <td class="text-end pe-0">$1,099.00</td>
-                                    </tr>
+                                    <?php if($payment_modes_trans) : ?>
+                                            <?php 
+                                                $counter = 1;
+                                                foreach($payment_modes_trans as $mode) : ?>
+                                                    <tr>
+                                                        <td class="ps-0"><?= $counter ?>.</td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="w-40px h-40px rounded">
+                                                                    <img src="assets/img/icon/<?= $mode->img?>.png" alt="" class="ms-100 mh-100">
+                                                                </div>
+                                                                <div class="ms-3 flex-grow-1">
+                                                                    <div class="fw-600 text-body"><?= $mode->payment_type?></div>
+                                                                    <div class="fs-13px d-none">5 minutes ago</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end pe-0"> <?= $mode->total_net_price?></td>
+                                                    </tr>
+                                                <?php $counter++;
+                                                    endforeach; ?>
+                                            <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

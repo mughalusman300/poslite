@@ -24,7 +24,7 @@
 							<th>#</th>
 							<th>Name</th>
 							<th>Category</th>
-							<th>Qty</th>
+							<th>Available Qty</th>
 							<th>Purchase Price</th>
 							<th>Sale Price</th>
 							<th>Discount</th>

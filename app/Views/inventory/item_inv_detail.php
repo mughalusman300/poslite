@@ -24,7 +24,7 @@
 		        	<div class="row">
 		        		<div class="col-10" style="font-size: 12px;text-align: center">
 					        <div style="font-weight: bold;color:#333"><?= $item_name ?></div>
-				            <img style="max-width: 185px; max-height: 70px;" src="<?= LIVE_URL?>/pdf/<?= $barcode?>.png" alt="barcode">
+				           <!--  <img style="max-width: 185px; max-height: 70px;" src="<?= LIVE_URL?>/pdf/<?= $barcode?>.png" alt="barcode"> -->
 					    </div>
 					    <div class="col-2"  style="vertical-align: middle;">
 				        	<div class="">
@@ -95,6 +95,7 @@
 									<th>PurchasePrice</th>
 									<th>Sale Price</th>
 									<th>Added Date</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>

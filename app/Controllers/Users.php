@@ -16,7 +16,6 @@ class Users extends BaseController
 	    $session = \Config\Services::session();
     }
     public function index(){
-        // dd('ok');
         $data['title'] = 'Users List';
         // $data['inventory'] ="nav-expanded nav-active";
         // $data['category'] ="nav-active";
@@ -57,6 +56,7 @@ class Users extends BaseController
                     data-name="'.$row->name.'"
                     data-email="'.$row->email.'"
                     data-power="'.$row->power.'"
+                    data-permissions="'.$row->permissions.'"
                     >Edit</button>
                 ';
 
@@ -99,12 +99,14 @@ class Users extends BaseController
         $email = $this->request->getVar('email');
         $power = $this->request->getVar('power');
         $password = md5($this->request->getVar('password'));
+        $permissions = $this->request->getVar('permissions');
 
         $data = array(
             'name' => $name,
             'email' => $email,
             'power' => $power,
             'password' => $password,
+            'permissions' => $permissions,
         );
 
         if ($type == 'add') {

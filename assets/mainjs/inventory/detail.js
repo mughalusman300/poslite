@@ -43,3 +43,36 @@ $(document).on('click','.print',function() {
 	}
 
 });
+
+$(document).on('click',".delete",function (e) {
+	var selector = $(this);
+	var inventory_detail_id = selector.attr('data-inventory_detail_id');
+
+	Swal.fire({
+	  title: 'Are you sure?',
+	  text: "You won't be able to revert this!",
+	  icon: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+	  	if (result.isConfirmed) {
+	  		$.ajax({
+	  			url: base + "/Inventory/delete_detail_row",
+	  			type: "POST",
+	  			data: {inventory_detail_id: inventory_detail_id},        
+	  			success: function(data) {
+	  			    if (data.success) {
+	  			    	selector.parents('.parent-row').remove();
+   						Swal.fire('', 'Deleted Successfully', 'success');
+	  				} else {
+	  					Swal.fire('', 'Something went wrong! Please try later', 'error');
+	  				}
+	  			}
+	  		});	
+
+	  	}
+	})
+
+});

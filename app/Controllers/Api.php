@@ -194,6 +194,10 @@ class Api extends BaseController
                                 }
                                 if ($item) {
                                     $sale_item['purch_price'] = $item->purchasePrice;
+                                    $update_item = array();
+                                    $update_item['sale_qty'] = $item->sale_qty + $sale_item['quantity'];
+                                    $this->Commonmodel->update_record($update_item, array('itemsId' => $line->itemId), 'saimtech_items');
+
                                 } else {
                                     if ($plateform == "OpenPOS") {
                                         $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemName' => $line->itemName)), 'saimtech_items_open');
