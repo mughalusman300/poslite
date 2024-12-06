@@ -50,13 +50,17 @@ class Category extends BaseController
 
             $i = 1;
             foreach ($categories as $row) {
-                $action = '<button class="btn btn-outline-theme edit-category"
-                    data-category_id="'.$row->category_id.'"
-                    data-title="'.$row->title.'"
-                    data-code="'.$row->code.'" 
-                    data-desc="'.$row->desc.'"
-                    >Edit</button>
-                ';
+                if (in_array('alter_category', $_SESSION['permissions'])) {
+                    $action = '<button class="btn btn-outline-theme edit-category"
+                        data-category_id="'.$row->category_id.'"
+                        data-title="'.$row->title.'"
+                        data-code="'.$row->code.'" 
+                        data-desc="'.$row->desc.'"
+                        >Edit</button>
+                    ';
+                } else {
+                    $action = 'N/A';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['title'] = $row->title;

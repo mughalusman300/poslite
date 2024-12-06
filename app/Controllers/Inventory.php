@@ -241,10 +241,13 @@ class Inventory extends BaseController
 
             $i = 1;
             foreach ($items as $row) {   
-                $action = '<button type="button" class="btn btn-outline-theme me-2 delete" 
+                $action = 'N/A';
+                if (in_array('alter_inventory', $_SESSION['permissions'])) {
+                    $action = '<button type="button" class="btn btn-outline-theme me-2 delete" 
                                         data-inventory_detail_id="'. $row->inventory_detail_id.'"
                                         style="width: 80px;">Delete</i>
                                     </button>';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['inventory_code'] = $row->inventory_code;                

@@ -34,7 +34,7 @@ class Login extends BaseController
     				$_SESSION['user_id']    = $user->id;
     				$_SESSION['user_name']  = $user->name;
                     $_SESSION['user_power']  = $user->power;
-    				$_SESSION['permissions']  = explode(',', $user->permissions);
+    				$_SESSION['permissions']  = (!empty($user->permissions)) ? (explode(',', $user->permissions)): '';
     				return redirect()->to('/Item'); 
     			} else {
     				$data['error'] ='Invalid password';

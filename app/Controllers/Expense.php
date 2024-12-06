@@ -59,11 +59,21 @@ class Expense extends BaseController
                     $status = 'Pending Approval';
                 }
 
+                $action = '';
                 if($status == 'Completed'){
-                    $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>'; 
+                    if (in_array('view_expense', $_SESSION['permissions'])){
+                        $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>';
+                    } 
                 } else {
-                    $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>'; 
-                    $action .= ' <a href="'.URL.'/expense/detail/approve/'.$row->id.'" class="btn btn-outline-theme view-expense">Approve</a>';
+                    if (in_array('view_expense', $_SESSION['permissions'])){
+                        $action = '<a href="'.URL.'/expense/detail/view/'.$row->id.'" class="btn btn-outline-theme view-expense">View</a>'; 
+                    }
+                    if (in_array('alter_expense', $_SESSION['permissions'])){
+                        $action .= ' <a href="'.URL.'/expense/detail/approve/'.$row->id.'" class="btn btn-outline-theme view-expense">Approve</a>';
+                    }
+                }
+                if (!in_array('view_expense', $_SESSION['permissions'])){
+                    $action = 'N/A';
                 }
 
                 $nestedData['sr'] = $i;
@@ -239,12 +249,15 @@ class Expense extends BaseController
 
             $i = 1;
             foreach ($headers as $row) {
-                $action = '<button class="btn btn-outline-theme edit-header"
-                    data-id="'.$row->id.'"
-                    data-name="'.$row->name.'"
-                    data-header_desc="'.$row->header_desc.'"
-                    >Edit</button>
-                ';
+                $action = 'N/A';
+                if (in_array('alter_expense', $_SESSION['permissions'])){
+                    $action = '<button class="btn btn-outline-theme edit-header"
+                        data-id="'.$row->id.'"
+                        data-name="'.$row->name.'"
+                        data-header_desc="'.$row->header_desc.'"
+                        >Edit</button>
+                    ';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['name'] = $row->name;
@@ -252,8 +265,9 @@ class Expense extends BaseController
 
                 $status = ($row->is_active) ? 'Active' : 'Deactive';
                 $checked = ($row->is_active) ? 'checked' : '';
+                $disabled = (in_array('alter_expense', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;
@@ -366,13 +380,16 @@ class Expense extends BaseController
 
             $i = 1;
             foreach ($modes as $row) {
-                $action = '<button class="btn btn-outline-theme edit-mode"
-                    data-id="'.$row->id.'"
-                    data-payment_type="'.$row->payment_type.'"
-                    data-name="'.$row->name.'"
-                    data-payment_mode_desc="'.$row->payment_mode_desc.'"
-                    >Edit</button>
-                ';
+                $action = 'N/A';
+                if (in_array('alter_expense', $_SESSION['permissions'])){
+                    $action = '<button class="btn btn-outline-theme edit-mode"
+                        data-id="'.$row->id.'"
+                        data-payment_type="'.$row->payment_type.'"
+                        data-name="'.$row->name.'"
+                        data-payment_mode_desc="'.$row->payment_mode_desc.'"
+                        >Edit</button>
+                    ';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['name'] = $row->name;
@@ -381,8 +398,9 @@ class Expense extends BaseController
 
                 $status = ($row->is_active) ? 'Active' : 'Deactive';
                 $checked = ($row->is_active) ? 'checked' : '';
+                $disabled = (in_array('alter_expense', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;
@@ -497,15 +515,18 @@ class Expense extends BaseController
 
             $i = 1;
             foreach ($parties as $row) {
-                $action = '<button class="btn btn-outline-theme edit-party"
-                    data-id="'.$row->id.'"
-                    data-party_type="'.$row->party_type.'"
-                    data-name="'.$row->name.'"
-                    data-detail="'.$row->detail.'"
-                    data-contact="'.$row->contact.'"
-                    data-note="'.$row->note.'"
-                    >Edit</button>
-                ';
+                $action = 'N/A';
+                if (in_array('alter_expense', $_SESSION['permissions'])){
+                    $action = '<button class="btn btn-outline-theme edit-party"
+                        data-id="'.$row->id.'"
+                        data-party_type="'.$row->party_type.'"
+                        data-name="'.$row->name.'"
+                        data-detail="'.$row->detail.'"
+                        data-contact="'.$row->contact.'"
+                        data-note="'.$row->note.'"
+                        >Edit</button>
+                    ';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['party_type'] = $row->party_type;
@@ -516,8 +537,9 @@ class Expense extends BaseController
 
                 $status = ($row->is_active) ? 'Active' : 'Deactive';
                 $checked = ($row->is_active) ? 'checked' : '';
+                $disabled = (in_array('alter_expense', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-id="'.$row->id.'" class="form-check-input" id="is_active" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;

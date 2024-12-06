@@ -54,19 +54,24 @@ class Item extends BaseController
 
             $i = 1;
             foreach ($items as $row) {
-                $action = '<button class="btn btn-outline-theme edit-item"
-                    data-itemsId="'.$row->itemsId.'"
-                    data-itemName="'.$row->itemName.'"
-                    data-itemCategory="'.$row->itemCategory.'"
-                    data-category_id="'.$row->category_id.'"
-                    data-purchasePrice="'.$row->purchasePrice.'"
-                    data-salePrice="'.$row->salePrice.'"
-                    data-discount="'.$row->discount.'"
-                    data-itemTags="'.$row->itemTags.'"
-                    >Edit</button>
-                ';
-                $detail_url = URL. '/inventory/item_inv_detail/'. $row->itemsId;  
-                $action.= '<a  href="'. $detail_url .'" target="_blank" class="btn btn-outline-theme">Inventory</a>';
+                $action = '';
+                if (in_array('alter_item', $_SESSION['permissions'])) {
+                    $action = '<button class="btn btn-outline-theme edit-item"
+                        data-itemsId="'.$row->itemsId.'"
+                        data-itemName="'.$row->itemName.'"
+                        data-itemCategory="'.$row->itemCategory.'"
+                        data-category_id="'.$row->category_id.'"
+                        data-purchasePrice="'.$row->purchasePrice.'"
+                        data-salePrice="'.$row->salePrice.'"
+                        data-discount="'.$row->discount.'"
+                        data-itemTags="'.$row->itemTags.'"
+                        >Edit</button>
+                    ';
+                }
+                $detail_url = URL. '/inventory/item_inv_detail/'. $row->itemsId;
+                if (in_array('view_inventory', $_SESSION['permissions'])) {
+                    $action.= '<a  href="'. $detail_url .'" target="_blank" class="btn btn-outline-theme">Inventory</a>';
+                }
                 $action.= '<button type="button" class="btn btn-outline-theme ms-1 print-barcode" 
                     data-item_id="'.$row->itemsId.'"  
                     data-barcode="'.$row->barcode.'"  
@@ -84,8 +89,9 @@ class Item extends BaseController
 
                 $status = ($row->itemActive) ? 'Active' : 'Deactive';
                 $checked = ($row->itemActive) ? 'checked' : '';
+                $disabled = (in_array('alter_item', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" data-itemsId="'.$row->itemsId.'" class="form-check-input" id="itemActive" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-itemsId="'.$row->itemsId.'" class="form-check-input" id="itemActive" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;

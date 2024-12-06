@@ -125,10 +125,12 @@
 										data-inventory_qty="<?= $detail->inventory_qty ?>"
 										style="width: 100px;">Barcode <i class="fa fa-barcode" aria-hidden="true"></i>
 									</button>
-									<button type="button" class="btn btn-outline-theme me-2 delete" 
-										data-inventory_detail_id="<?= $detail->inventory_detail_id ?>"
-										style="width: 80px;">Delete</i>
-									</button>
+									<?php if (in_array('alter_inventory', $_SESSION['permissions'])):?>
+										<button type="button" class="btn btn-outline-theme me-2 delete" 
+											data-inventory_detail_id="<?= $detail->inventory_detail_id ?>"
+											style="width: 80px;">Delete</i>
+										</button>
+									<?php endif; ?>
 								</div>
 							</div>
 

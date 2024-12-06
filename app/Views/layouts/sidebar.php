@@ -1,4 +1,7 @@
 <?php 
+if(!isset($_SESSION['permissions']) || empty($_SESSION['permissions'])) {
+    header("Location:" . URL.'/login/logout'); exit(); 
+}
 $permissions = $_SESSION['permissions'];
 ?>
     <!-- BEGIN #sidebar -->
@@ -7,6 +10,7 @@ $permissions = $_SESSION['permissions'];
         <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
             <!-- BEGIN menu -->
             <div class="menu">
+                
                 <?php if(in_array('view_dashboard', $permissions)) :?>
                     <div class="menu-item active">
                         <a href="<?= URL?>/dashboard" class="menu-link">

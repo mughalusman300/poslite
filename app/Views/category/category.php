@@ -8,7 +8,10 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Categories 
-		<button type="button" class="btn btn-outline-theme me-2 add-category">Add Category</button>
+		<?php 
+            if (in_array('alter_category', $_SESSION['permissions'])) :?>
+			<button type="button" class="btn btn-outline-theme me-2 add-category">Add Category</button>
+		<?php endif ;?>
 		<!-- Categories <small>page header description goes here...</small> -->
 	</h1>
 

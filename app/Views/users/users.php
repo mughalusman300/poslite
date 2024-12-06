@@ -8,7 +8,9 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Users 
-		<button type="button" class="btn btn-outline-theme me-2 add-user">Add User</button>
+		<?php if (in_array('alter_system_administration', $_SESSION['permissions'])):?>
+			<button type="button" class="btn btn-outline-theme me-2 add-user">Add User</button>
+		<?php endif ;?>
 		<!-- Users <small>page header description goes here...</small> -->
 	</h1>
 

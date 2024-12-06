@@ -29,4 +29,13 @@ class Dashboard extends BaseController
 
         return view('layouts/page',$data);
     }
+
+    public function get_weekly_sales() {
+
+        // Fetch sales data from the model
+        $sales_data = $this->Dashboardmodel->get_weekly_sales();
+        
+        // Return the data as JSON
+        echo json_encode($sales_data);
+    }
 }

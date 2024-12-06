@@ -15,7 +15,7 @@ class Auth implements FilterInterface
         if(!isset($_SESSION['user_id'])){
         	return redirect()->to('/Login');
         }
-        if (isset($_SESSION['permissions'])) {
+        if (isset($_SESSION['permissions']) && !empty($_SESSION['permissions'])) {
             $permissions = $_SESSION['permissions'];
             $router = service('router');
                        

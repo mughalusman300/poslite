@@ -51,14 +51,17 @@ class Users extends BaseController
 
             $i = 1;
             foreach ($users as $row) {
-                $action = '<button class="btn btn-outline-theme edit-user"
-                    data-id="'.$row->id.'"
-                    data-name="'.$row->name.'"
-                    data-email="'.$row->email.'"
-                    data-power="'.$row->power.'"
-                    data-permissions="'.$row->permissions.'"
-                    >Edit</button>
-                ';
+                $action = 'N/A';
+                if (in_array('alter_system_administration', $_SESSION['permissions'])) {
+                    $action = '<button class="btn btn-outline-theme edit-user"
+                        data-id="'.$row->id.'"
+                        data-name="'.$row->name.'"
+                        data-email="'.$row->email.'"
+                        data-power="'.$row->power.'"
+                        data-permissions="'.$row->permissions.'"
+                        >Edit</button>
+                    ';
+                }
 
                 $nestedData['sr'] = $i;
                 $nestedData['name'] = $row->name;
@@ -67,8 +70,9 @@ class Users extends BaseController
 
                 $status = ($row->is_enable) ? 'Active' : 'Deactive';
                 $checked = ($row->is_enable) ? 'checked' : '';
+                $disabled = (in_array('alter_system_administration', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" data-id="'.$row->id.'" class="form-check-input" id="is_enable" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-id="'.$row->id.'" class="form-check-input" id="is_enable" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;

@@ -8,7 +8,9 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Expense 
-		<a href="<?=URL?>/expense/add_expense" type="button" class="btn btn-outline-theme me-2">Add Expense</a>
+		<?php if (in_array('alter_expense', $_SESSION['permissions'])):?>
+			<a href="<?=URL?>/expense/add_expense" type="button" class="btn btn-outline-theme me-2">Add Expense</a>
+		<?php endif; ?>
 		<!-- Items <small>page header description goes here...</small> -->
 	</h1>
 

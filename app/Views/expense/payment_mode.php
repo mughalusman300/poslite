@@ -8,7 +8,9 @@
 	
 	<h1 class="page-header d-flex justify-content-between">
 		Payment Mode 
-		<button type="button" class="btn btn-outline-theme me-2 add-mode">Add Payment Mode</button>
+		<?php if (in_array('alter_expense', $_SESSION['permissions'])):?>
+			<button type="button" class="btn btn-outline-theme me-2 add-mode">Add Payment Mode</button>
+		<?php endif; ?>
 		<!-- Items <small>page header description goes here...</small> -->
 	</h1>
 
