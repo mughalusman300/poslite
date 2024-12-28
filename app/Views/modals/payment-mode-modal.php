@@ -18,9 +18,10 @@
 								<label class="form-label">Type</label><span class="color-red">*</span>
 								<select name="payment_type" id="payment_type" class="form-control validate-input select payment_type">
 									<option value="">Select</option>
-									<option value="Bank Transfer">Bank Transfer</option>
+									<option value="Bank">Bank</option>
 									<option value="Cheque">Cheque</option>
 									<option value="Cash">Cash</option>
+									<option value="Card">Card</option>
 									<option value="Other">Other</option>
 								</select>
 							</div>

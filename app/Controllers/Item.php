@@ -17,6 +17,7 @@ class Item extends BaseController
     }
     public function index(){
         $data['title'] = 'Item List';
+        $data['items_active'] = 'active';
         // $data['inventory'] ="nav-expanded nav-active";
         // $data['category'] ="nav-active";
 

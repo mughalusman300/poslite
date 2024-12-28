@@ -20,7 +20,7 @@ class Itemmodel extends Model {
             $limit = 12546464646464646;
         }
         $builder->limit($limit,$start);
-        // $this->db->order_by('category_id',"asc");
+        $builder->orderBy('itemsId',"desc");
         $query = $builder->get();  
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;
         return $result; 
@@ -47,7 +47,7 @@ class Itemmodel extends Model {
         $builder->orLike('itemCategory', $search);
 
         $builder->limit($limit,$start);
-        // $builder->order_by('category_id',"asc")
+        $builder->orderBy('itemsId',"desc");
        $query = $builder->get();
     
         $result = ($query->getNumRows() > 0) ? $query->getResult() : FALSE;

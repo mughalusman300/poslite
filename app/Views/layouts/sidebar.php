@@ -12,7 +12,7 @@ $permissions = $_SESSION['permissions'];
             <div class="menu">
                 
                 <?php if(in_array('view_dashboard', $permissions)) :?>
-                    <div class="menu-item active">
+                    <div class="menu-item <?= isset($dashboard_active) ? $dashboard_active: ''; ?>">
                         <a href="<?= URL?>/dashboard" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-laptop"></i></span>
                             <span class="menu-text">Dashboard</span>
@@ -22,7 +22,7 @@ $permissions = $_SESSION['permissions'];
 
                 <?php if(in_array('view_dashboard', $permissions)) :?>
                     <div class="menu-header">Sales</div>
-                    <div class="menu-item">
+                    <div class="menu-item <?= isset($sales_active) ? $sales_active: ''; ?>">
                         <a href="<?= URL?>/sales" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-shopping-bag"></i></span>
                             <span class="menu-text">Sales & Return</span>
@@ -34,7 +34,7 @@ $permissions = $_SESSION['permissions'];
                     <div class="menu-header">Inventory</div>
                 <?php endif ;?>
                 <?php if(in_array('view_item', $permissions)):?>
-                    <div class="menu-item">
+                    <div class="menu-item <?= isset($items_active) ? $items_active: ''; ?>">
                         <a href="<?= URL?>/item" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-history"></i></span>
                             <span class="menu-text">Items</span>
@@ -42,7 +42,7 @@ $permissions = $_SESSION['permissions'];
                     </div>
                 <?php endif ;?>
                 <?php if(in_array('view_category', $permissions)):?>
-                    <div class="menu-item">
+                    <div class="menu-item <?= isset($category_active) ? $category_active: ''; ?>">
                         <a href="<?= URL?>/category" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-history"></i></span>
                             <span class="menu-text">Category</span>
@@ -50,7 +50,7 @@ $permissions = $_SESSION['permissions'];
                     </div>
                 <?php endif ;?>
                 <?php if(in_array('view_inventory', $permissions)):?>
-                    <div class="menu-item">
+                    <div class="menu-item <?= isset($inventory_active) ? $inventory_active: ''; ?>">
                         <a href="<?= URL?>/inventory" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-assistive-listening-systems"></i></span>
                             <span class="menu-text">Inventory List</span>
@@ -60,7 +60,7 @@ $permissions = $_SESSION['permissions'];
 
                 <?php if(in_array('view_expense', $permissions)):?>
                     <div class="menu-header">Expense</div>
-                    <div class="menu-item has-sub">
+                    <div class="menu-item has-sub <?= isset($expense_expand) ? $expense_expand: ''; ?>">
                         <a href="#" class="menu-link">
                             <span class="menu-icon">
                                 <i class="fa fa-arrow-right-from-file"></i>
@@ -69,23 +69,23 @@ $permissions = $_SESSION['permissions'];
                             <span class="menu-text">Expense</span>
                             <span class="menu-caret"><b class="caret"></b></span>
                         </a>
-                        <div class="menu-submenu">
-                            <div class="menu-item">
+                        <div class="menu-submenu" <?= isset($expense_expand) ? 'style="display:block"': ''; ?>>
+                            <div class="menu-item <?= isset($expense_header_active) ? $expense_header_active: ''; ?>">
                                 <a href="<?= URL?>/expense/expense_header" class="menu-link">
                                     <span class="menu-text">Expense Header</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item <?= isset($expense_active) ? $expense_active: ''; ?>">
                                 <a href="<?= URL?>/expense" class="menu-link">
                                     <span class="menu-text">Expense</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item <?= isset($payment_active) ? $payment_active: ''; ?>">
                                  <a href="<?= URL?>/expense/payment_mode" class="menu-link">
                                     <span class="menu-text">Payment Mode</span> 
                                 </a>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item <?= isset($party_active) ? $party_active: ''; ?>">
                                  <a href="<?= URL?>/expense/party" class="menu-link">
                                     <span class="menu-text">Party</span> 
                                 </a>
@@ -96,7 +96,7 @@ $permissions = $_SESSION['permissions'];
 
                 <?php if(in_array('view_sale_report', $permissions)):?>
                     <div class="menu-header">Reports</div>
-                    <div class="menu-item has-sub">
+                    <div class="menu-item has-sub <?= isset($sale_report_expand) ? $sale_report_expand: ''; ?>">
                         <a href="#" class="menu-link">
                             <span class="menu-icon">
                                 <i class="fa fa-shekel-sign"></i>
@@ -105,18 +105,18 @@ $permissions = $_SESSION['permissions'];
                             <span class="menu-text">Sale Reports</span>
                             <span class="menu-caret"><b class="caret"></b></span>
                         </a>
-                        <div class="menu-submenu">
-                            <div class="menu-item">
+                        <div class="menu-submenu" <?= isset($sale_report_expand) ? 'style="display:block"': ''; ?>>
+                            <div class="menu-item <?= isset($sale_report_by_date_active) ? $sale_report_by_date_active: ''; ?>">
                                 <a href="<?= URL?>/report/sale_report_by_date" class="menu-link">
                                     <span class="menu-text">Sales Report By Date</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item <?= isset($sale_report_by_category_active) ? $sale_report_by_category_active: ''; ?>">
                                 <a href="<?= URL?>/report/sale_report_by_category" class="menu-link">
                                     <span class="menu-text">Sale Report By Category</span>
                                 </a>
                             </div>
-                            <div class="menu-item">
+                            <div class="menu-item <?= isset($sale_report_by_payment_active) ? $sale_report_by_payment_active: ''; ?>">
                                  <a href="<?= URL?>/report/sale_report_by_payment" class="menu-link">
                                     <span class="menu-text">Sale Report By Payment</span> 
                                 </a>
@@ -157,9 +157,9 @@ $permissions = $_SESSION['permissions'];
 
                 <?php if(in_array('view_system_administration', $permissions)):?>
                     <div class="menu-header">System Administration</div>
-                    <div class="menu-item">
+                    <div class="menu-item <?= isset($users_active) ? $users_active: ''; ?>">
                         <a href="<?= URL?>/users" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-user-times"></i></span>
+                            <span class="menu-icon"><i class="fa fa-user-plus"></i></span>
                             <span class="menu-text">Users</span>
                         </a>
                     </div>

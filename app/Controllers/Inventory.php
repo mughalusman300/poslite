@@ -19,6 +19,7 @@ class Inventory extends BaseController
     }
     public function index(){
         $data['title'] = 'Inventory List';
+        $data['inventory_active'] = 'active';
         $data['main_content'] = 'inventory/inventory';
         return view('layouts/page',$data);
     }
@@ -79,6 +80,7 @@ class Inventory extends BaseController
     public function add_inventory(){
         if (isset($_POST) && !empty($_POST)) {
             // ddd($_POST);
+            $data['inventory_active'] = 'active';
             $data['inventory_code'] = $this->request->getVar('inventory_code');
             $data['inventory_date'] = date('Y-m-d');
             $data['inventory_desc'] = $this->request->getVar('inventory_desc');
@@ -125,6 +127,7 @@ class Inventory extends BaseController
         } else {
             // ddd(inventory_code());
             $data['title'] = 'Add Inventory';
+            $data['inventory_active'] = 'active';
             // $data['inventory'] ="nav-expanded nav-active";
             // $data['category'] ="nav-active";
 

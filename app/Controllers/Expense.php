@@ -18,7 +18,8 @@ class Expense extends BaseController
     }
     public function index(){
         $data['title'] = 'Expense';
-        // $data['inventory'] ="nav-expanded nav-active";
+        $data['expense_expand'] ="expand";
+        $data['expense_active'] ="active";
         // $data['category'] ="nav-active";
 
         $data['main_content'] = 'expense/expense';
@@ -140,8 +141,8 @@ class Expense extends BaseController
 
         } else {
             $data['title'] = 'Add Expense';
-            // $data['inventory'] ="nav-expanded nav-active";
-            // $data['category'] ="nav-active";
+            $data['expense_expand'] ="expand";
+            $data['expense_active'] ="active";
 
             $data['headers'] = $this->Expensemodel->all_header(-1,0);
             $data['parties'] = $this->Expensemodel->all_party(-1,0);
@@ -153,8 +154,8 @@ class Expense extends BaseController
 
     public function detail($type, $expense_id){
         $data['title'] = 'Expense Detail';
-        // $data['inventory'] ="nav-expanded nav-active";
-        // $data['category'] ="nav-active";
+        $data['expense_expand'] ="expand";
+        $data['expense_active'] ="active";
         $data['headers'] = $this->Expensemodel->all_header(-1,0);
         $data['parties'] = $this->Expensemodel->all_party(-1,0);
         $data['modes'] = $this->Expensemodel->all_mode(-1,0);
@@ -218,8 +219,8 @@ class Expense extends BaseController
     //Expense Header functions
     public function expense_header(){
         $data['title'] = 'Expense Header';
-        // $data['inventory'] ="nav-expanded nav-active";
-        // $data['category'] ="nav-active";
+        $data['expense_expand'] ="expand";
+        $data['expense_header_active'] ="active";
 
         $data['main_content'] = 'expense/expense_header';
         return view('layouts/page',$data);
@@ -349,8 +350,8 @@ class Expense extends BaseController
     //Payment Mode functions
     public function payment_mode(){
         $data['title'] = 'Payment Mode';
-        // $data['inventory'] ="nav-expanded nav-active";
-        // $data['category'] ="nav-active";
+        $data['expense_expand'] ="expand";
+        $data['payment_active'] ="active";
 
         $data['main_content'] = 'expense/payment_mode';
         return view('layouts/page',$data);
@@ -484,8 +485,8 @@ class Expense extends BaseController
     //Party functions 
     public function party(){
         $data['title'] = 'Payment Mode';
-        // $data['inventory'] ="nav-expanded nav-active";
-        // $data['category'] ="nav-active";
+        $data['expense_expand'] ="expand";
+        $data['party_active'] ="active";
 
         $data['main_content'] = 'expense/party';
         return view('layouts/page',$data);

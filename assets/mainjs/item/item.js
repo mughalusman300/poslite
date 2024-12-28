@@ -1,4 +1,22 @@
 $(document).ready(function(){
+	$('.item-modal :input').on('keydown', function(e) {
+	    if (e.key === 'Enter') {
+	        e.preventDefault(); // Prevent the default Enter behavior
+	        const focusable = $('.item-modal').find(':input:visible'); // Find all focusable elements
+	        const index = focusable.index(this); // Get the current element's index
+
+	        if (index > -1 && index < focusable.length - 1) {
+	            const nextElement = focusable.eq(index + 1);
+	            if (!$(this).is('button')) {
+	                nextElement.focus(); // Move focus to the next element
+	            }
+	        } else if ($(this).is('button')) {
+	            $(this).trigger('click'); // Trigger click if already on a button
+	        }
+	    }
+	});
+
+
 	itemList();
 	
 	var table = $('#category').DataTable({

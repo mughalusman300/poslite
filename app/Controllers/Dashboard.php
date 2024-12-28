@@ -16,6 +16,7 @@ class Dashboard extends BaseController
     }
     public function index(){
         $data['title'] = 'Dashboard';    
+        $data['dashboard_active'] = 'active';    
         $data['error'] = '';    
     	$data['main_content'] = 'dashboard';
 

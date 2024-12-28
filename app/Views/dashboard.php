@@ -187,7 +187,14 @@
                             <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
                         </div>
                         <!-- <div id="chart"></div> -->
+                        <div>
+                            <button id="previousButton" class="btn btn-outline-theme btn-sm">Previous Week</button>
+                            <button id="recentButton" class="btn btn-outline-theme btn-sm">Latest Week</button>
+                            <button id="nextButton" class="btn btn-outline-theme btn-sm">Next Week</button>
+                        </div>
                         <div id="salesChart"></div>
+
+
                     </div>
                     <!-- END card-body -->
                 </div>

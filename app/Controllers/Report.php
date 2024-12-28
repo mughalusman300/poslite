@@ -19,6 +19,9 @@ class Report extends BaseController
 
     public function sale_report_by_date(){
         $data['title'] = 'Sale Report By date';
+        $data['sale_report_expand'] ="expand";
+        $data['sale_report_by_date_active'] ="active";
+
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
             $start_date = $this->request->getVar('start_date');
@@ -43,6 +46,9 @@ class Report extends BaseController
 
     public function sale_report_by_category(){
         $data['title'] = 'Sale Report By Category';
+        $data['sale_report_expand'] ="expand";
+        $data['sale_report_by_category_active'] ="active";
+
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
             $start_date = $this->request->getVar('start_date');
@@ -58,6 +64,9 @@ class Report extends BaseController
     }
     public function sale_report_by_payment(){
         $data['title'] = 'Sale Report By Payment';
+        $data['sale_report_expand'] ="expand";
+        $data['sale_report_by_payment_active'] ="active";
+        
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
             $start_date = $this->request->getVar('start_date');

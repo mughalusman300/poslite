@@ -19,6 +19,7 @@ class Sales extends BaseController
 
     public function index(){
         $data['title'] = 'Sales';
+        $data['sales_active'] = 'active';
         $start_date = date('Y-m-d');
         $end_date = date('Y-m-d');
         $data['start_date'] = $start_date;

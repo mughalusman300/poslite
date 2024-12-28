@@ -88,14 +88,18 @@
 
     public function get_weekly_sales() {
         // Get the last 7 days before today
+      // ddd($_GET['end_date']);
         $dates = [];
         for ($i = 7; $i >= 1; $i--) { // Start from 7 and go to 1 to exclude the current date
-            $dates[] = date('d M', strtotime("-$i days"));
+            // $dates[] = date('d M', strtotime("-$i days"));
+            $dates[] = date('d M', strtotime($_GET['end_date'] . " -$i days"));
         }
 
         // Fetch sales data for the last 7 days (excluding today)
-        $last_week = date('Y-m-d', strtotime('-7 days')); // Start date (7 days ago)
-        $yesterday = date('Y-m-d', strtotime('-1 days')); // End date (yesterday)
+        // $last_week = date('Y-m-d', strtotime('-7 days')); // Start date (7 days ago)
+        // $yesterday = date('Y-m-d', strtotime('-1 days')); // End date (yesterday)
+        $last_week = date('Y-m-d', strtotime($_GET['end_date'] . ' -7 day'));
+        $yesterday = date('Y-m-d', strtotime($_GET['end_date'] . ' -1 day'));
 
         $query = $this->db->table('saimtech_saletrans')
                           ->select("DATE_FORMAT(invoice_date, '%d %b') as date, SUM(net_price) as total_sales")

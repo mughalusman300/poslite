@@ -16,6 +16,7 @@ class Category extends BaseController
     }
     public function index(){
         $data['title'] = 'Category List';
+        $data['category_active'] = 'active';
         // $data['inventory'] ="nav-expanded nav-active";
         // $data['category'] ="nav-active";
 

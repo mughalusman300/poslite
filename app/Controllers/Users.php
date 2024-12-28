@@ -17,8 +17,7 @@ class Users extends BaseController
     }
     public function index(){
         $data['title'] = 'Users List';
-        // $data['inventory'] ="nav-expanded nav-active";
-        // $data['category'] ="nav-active";
+        $data['users_active'] ="active";
 
         // $items = $this->Commonmodel->getAllRecords('saimtech_users');
         // $data['items'] = $items;
