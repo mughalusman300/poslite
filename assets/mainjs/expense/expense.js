@@ -67,4 +67,43 @@ $(document).ready(function(){
 		});	
 	});
 
+	$(document).on('click', '.delete', function(){
+
+		var expense_id = $(this).data('expense_id');
+
+
+		Swal.fire({
+		  title: 'Are you sure you want to delete this expense',
+		  text: "You won't be able to revert this!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, do it!'
+		}).then((result) => {
+		    if (result.isConfirmed) {
+
+		        $.ajax({
+		            url: base + "/expense/delete",
+		            type: "POST",
+		            data: {
+		                expense_id: expense_id,
+		            },        
+		            success: function(data) {
+		                if (data.success) {
+		                	Swal.fire('', 'Expense deleted successfully!', 'success');
+		                    var table = $('#expense').dataTable();
+		                    table.fnDestroy();
+		                    expense_list();
+
+		                } else {
+		                    Swal.fire('', 'Something went wrong! Please try later', 'error');
+		                }
+		            }
+		        }); 
+
+		    }
+		})
+	})
+
 });

@@ -25,12 +25,14 @@ $this->Reportmodel = new Reportmodel();
                     <div class="row">
                         <div class="col-md-4">
                             <label for="title" class="form-label">Start Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input start_date" placeholder="dd-mm-yyyy" id="start_date" value="<?= $start_date ?>" name="start_date" >
+                            <!-- <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required=""> -->
                         </div>
 
                         <div class="col-md-4">
                             <label for="title" class="form-label">End Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input end_date" placeholder="dd-mm-yyyy" id="end_date" value="<?= $end_date ?>" name="end_date" >
+                            <!-- <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required=""> -->
                         </div>
                     </div>
                     <div class="row">

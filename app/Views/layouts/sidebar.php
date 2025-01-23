@@ -29,6 +29,15 @@ $permissions = $_SESSION['permissions'];
                         </a>
                     </div>
                 <?php endif ;?>
+
+                <?php if(in_array('view_pnl', $permissions)):?>
+                    <div class="menu-item <?= isset($pnl_active) ? $pnl_active: ''; ?>">
+                        <a href="<?= URL?>/accounts/pnl" class="menu-link">
+                            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+                            <span class="menu-text">PNL</span>
+                        </a>
+                    </div>
+                <?php endif;?> 
                 
                 <?php if(in_array('view_inventory', $permissions) || in_array('view_category', $permissions) || in_array('view_item', $permissions)):?>
                     <div class="menu-header">Inventory</div>
@@ -36,7 +45,7 @@ $permissions = $_SESSION['permissions'];
                 <?php if(in_array('view_item', $permissions)):?>
                     <div class="menu-item <?= isset($items_active) ? $items_active: ''; ?>">
                         <a href="<?= URL?>/item" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-history"></i></span>
+                            <span class="menu-icon"><i class="fab fa-product-hunt"></i></span>
                             <span class="menu-text">Items</span>
                         </a>
                     </div>
@@ -44,8 +53,8 @@ $permissions = $_SESSION['permissions'];
                 <?php if(in_array('view_category', $permissions)):?>
                     <div class="menu-item <?= isset($category_active) ? $category_active: ''; ?>">
                         <a href="<?= URL?>/category" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-history"></i></span>
-                            <span class="menu-text">Category</span>
+                            <span class="menu-icon"><i class="fas fa-square"></i></span>
+                            <span class="menu-text">Categories</span>
                         </a>
                     </div>
                 <?php endif ;?>
@@ -130,29 +139,34 @@ $permissions = $_SESSION['permissions'];
                         <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
                         <span class="menu-text">Expense Report</span>
                     </a>
-                </div>    
+                </div>   
 
-                <?php if(in_array('view_accounts', $permissions)):?>
+                <?php if(in_array('view_accounts', $permissions) || in_array('view_payable', $permissions) || in_array('view_receivable', $permissions)):?>
                     <div class="menu-header">Accounts</div>
-                    <div class="menu-item">
-                        <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-book-journal-whills"></i></span>
-                            <span class="menu-text">Accounts</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-bank"></i></span>
-                            <span class="menu-text">Bank</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="<?= URL?>/item/underconstruction" class="menu-link">
-                            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
-                            <span class="menu-text">PNL</span>
-                        </a>
-                    </div>
+                    <?php if(in_array('view_accounts', $permissions)):?>
+                        <div class="menu-item <?= isset($accounts_active) ? $accounts_active: ''; ?>">
+                            <a href="<?= URL?>/accounts" class="menu-link">
+                                <span class="menu-icon"><i class="fa fa-book-journal-whills"></i></span>
+                                <span class="menu-text">Accounts</span>
+                            </a>
+                        </div>
+                    <?php endif;?>
+                    <?php if(in_array('view_payable', $permissions)):?>
+                        <div class="menu-item <?= isset($payable_active) ? $payable_active: ''; ?>">
+                            <a href="<?= URL?>/payable" class="menu-link">
+                                <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+                                <span class="menu-text">Accounts Payable (AP)</span>
+                            </a>
+                        </div>
+                    <?php endif;?>
+                    <?php if(in_array('view_receivable', $permissions)):?>
+                        <div class="menu-item <?= isset($receivable_active) ? $receivable_active: ''; ?>">
+                            <a href="<?= URL?>/receivable" class="menu-link">
+                                <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+                                <span class="menu-text">Accounts Receivable (AR)</span>
+                            </a>
+                        </div>
+                    <?php endif;?>
                 <?php endif;?>
 
                 <?php if(in_array('view_system_administration', $permissions)):?>
@@ -164,19 +178,19 @@ $permissions = $_SESSION['permissions'];
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="<?= URL?>/item" class="menu-link">
+                        <a href="<?= URL?>/item" class="menu-link d-none">
                             <span class="menu-icon"><i class="fa fa-blog"></i></span>
                             <span class="menu-text">User Logs</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="<?= URL?>/item" class="menu-link">
+                        <a href="<?= URL?>/item" class="menu-link d-none">
                             <span class="menu-icon"><i class="fa fa-scale-balanced"></i></span>
                             <span class="menu-text">POS Setting</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="<?= URL?>/item" class="menu-link">
+                        <a href="<?= URL?>/item" class="menu-link d-none">
                             <span class="menu-icon"><i class="fa fa-assistive-listening-systems"></i></span>
                             <span class="menu-text">System Logs</span>
                         </a>

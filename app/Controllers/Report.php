@@ -24,9 +24,12 @@ class Report extends BaseController
 
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
-            $start_date = $this->request->getVar('start_date');
-            $end_date = $this->request->getVar('end_date');
+            $start_date = date('Y-m-d',strtotime($this->request->getVar('start_date')));
+            $end_date = date('Y-m-d',strtotime($this->request->getVar('end_date')));
             $report_data = $this->Reportmodel->getSalesReportByDate($start_date, $end_date);
+
+            $start_date = date('d-m-Y', strtotime($start_date));
+            $end_date = date('d-m-Y', strtotime($end_date));
             // ddd($report_data);
             $data['report_data'] = $report_data;
         }
@@ -51,13 +54,16 @@ class Report extends BaseController
 
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
-            $start_date = $this->request->getVar('start_date');
-            $end_date = $this->request->getVar('end_date');
+            $start_date = date('Y-m-d',strtotime($this->request->getVar('start_date')));
+            $end_date = date('Y-m-d',strtotime($this->request->getVar('end_date')));
             $report_data = $this->Reportmodel->getSalesReportByDate($start_date, $end_date);
+
+            $start_date = date('d-m-Y', strtotime($start_date));
+            $end_date = date('d-m-Y', strtotime($end_date));
             // ddd($report_data);
             $data['report_data'] = $report_data;
         }
-        $data['start_date'] = $start_date;
+        $data['start_date'] = ($start_date);
         $data['end_date'] = $end_date;
         $data['main_content'] = 'report/sale_report_by_category';
         return view('layouts/page',$data);
@@ -69,9 +75,12 @@ class Report extends BaseController
         
         $start_date = $end_date = $report_data =  '';
         if (isset($_POST) && !empty($_POST)) {
-            $start_date = $this->request->getVar('start_date');
-            $end_date = $this->request->getVar('end_date');
+            $start_date = date('Y-m-d',strtotime($this->request->getVar('start_date')));
+            $end_date = date('Y-m-d',strtotime($this->request->getVar('end_date')));
             $report_data = $this->Reportmodel->getSalesReportByDate($start_date, $end_date);
+
+            $start_date = date('d-m-Y', strtotime($start_date));
+            $end_date = date('d-m-Y', strtotime($end_date));
             // ddd($report_data);
             $data['report_data'] = $report_data;
         }

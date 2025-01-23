@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\Commonmodel;
 use App\Models\Accountsmodel;
+use App\Models\Expensemodel;
 use CodeIgniter\API\ResponseTrait;
 use App\Libraries\FpdfLib;
 use Zend\Barcode\Barcode;
@@ -14,13 +15,17 @@ class Accounts extends BaseController
         parent::initController($request, $response, $logger);
         $this->Commonmodel = new Commonmodel();
         $this->Accountsmodel = new Accountsmodel();
+        $this->Expensemodel = new Expensemodel();
         $session = \Config\Services::session();
         helper('custom_helper');
     }
     public function index(){
         $data['title'] = 'Accounts List';
-        $data['account_active'] = 'active';
+        $data['accounts_active'] = 'active';
         $data['main_content'] = 'accounts/accounts';
+
+        $data['parties'] = $this->Expensemodel->all_party(-1,0);
+
         return view('layouts/page',$data);
     }
 
@@ -32,8 +37,6 @@ class Accounts extends BaseController
         // dd($search);
         $totalData = $this->Accountsmodel->all_account_count();
         $totalFiltered = $totalData;
-
-        $limit = 10; $start = 0;
 
         if (empty($search)) {
             $accounts = $this->Accountsmodel->all_account($limit, $start);
@@ -48,28 +51,36 @@ class Accounts extends BaseController
 
             foreach ($accounts as $row) {
 
-                // $detail_url = URL. '/inventory/detail/'. $row->inventory_id;  
-
-                // $action = '<a  href="'. $detail_url .'" class="btn btn-outline-theme" style="width:140px">View Detail <i class="fa fa-eye" aria-hidden="true"></i></a>
-                // ';   
-                $action = "";               
+                if (in_array('alter_accounts', $_SESSION['permissions'])) {
+                    $action = '<button class="btn btn-outline-theme edit-account"
+                        data-account_id="'.$row->account_id.'"
+                        data-account_name="'.$row->account_name.'"
+                        data-party_id="'.$row->party_id.'" 
+                        data-type="'.$row->type.'"
+                        data-account_desc="'.$row->account_desc.'" 
+                        >Edit</button>
+                    ';
+                } else {
+                    $action = 'N/A';
+                }
+          
                 $nestedData['account_name'] = $row->account_name;
 
                 $nestedData['type'] = $row->type;  
                 $nestedData['party_name'] = $row->party_name;  
-                $nestedData['account_narration'] = ($row->account_narration) ? $row->account_narration : 'N/A';
+                $nestedData['account_desc'] = ($row->account_desc) ? $row->account_desc : 'N/A';
 
                 $status = ($row->is_active) ? 'Active' : 'Deactive';
                 $checked = ($row->is_active) ? 'checked' : '';
-                $disabled = (in_array('alter_acount', $_SESSION['permissions'])) ? '' : 'disabled';
+                $disabled = (in_array('alter_accounts', $_SESSION['permissions'])) ? '' : 'disabled';
                 $status = '<div class="form-check form-switch">
-                            <input type="checkbox" '.$disabled.' data-itemsId="'.$row->account_id.'" class="form-check-input" id="is_active" '. $checked .'>
+                            <input type="checkbox" '.$disabled.' data-account_id="'.$row->account_id.'" class="form-check-input" id="is_active" '. $checked .'>
                             <label class="form-check-label" for="customSwitch2">'. $status. '</label>
                         </div>'  ;                          
                 $nestedData['status'] = $status;
                 $nestedData['created_at'] = date('d-m-Y', strtotime($row->created_at));
 
-                $nestedData['Action'] = $action;
+                $nestedData['action'] = $action;
 
                 $data[] = $nestedData;
             }
@@ -88,241 +99,84 @@ class Accounts extends BaseController
         echo json_encode($json_data);
     }
 
-    public function add_inventory(){
-        if (isset($_POST) && !empty($_POST)) {
-            // ddd($_POST);
-            $data['inventory_active'] = 'active';
-            $data['inventory_code'] = $this->request->getVar('inventory_code');
-            $data['inventory_date'] = date('Y-m-d');
-            $data['inventory_desc'] = $this->request->getVar('inventory_desc');
-            $data['supplier_id'] = 1;
-            $data['created_by'] = $_SESSION['user_id'];
-
-            $inventory_id = $this->Commonmodel->insert_record($data, 'saimtech_inventory');
-
-            if($inventory_id) {
-                $total = 0;
-                foreach ($_POST['item_id'] as $key => $value) {
-                    $detail_data = array();
-                    $item_id = $this->request->getVar("item_id")[$key];
-                    $detail_data['item_id'] = $this->request->getVar("item_id")[$key];
-                    $detail_data['purchase_price'] = $this->request->getVar("purchase_price")[$key];
-                    $detail_data['sale_price'] = $this->request->getVar("sale_price")[$key];
-                    $detail_data['inventory_qty'] = $this->request->getVar("inventory_qty")[$key];
-
-                    $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId ' => $item_id)), 'saimtech_items');
-
-                    $detail_data['prev_purchase_price'] = $this->request->getVar("prev_purchase_price")[$key];
-                    $detail_data['prev_sale_price'] = $this->request->getVar("prev_sale_price")[$key];
-                    // $detail_data['prev_inventory_qty'] = $this->request->getVar("prev_inventory_qty")[$key];
-                    $detail_data['prev_inventory_qty'] = $item->qty;
-                    $detail_data['inventory_id'] = $inventory_id;
-                    $detail_data['supplier_id'] = 1;
-                    $detail_data['created_by'] = $_SESSION['user_id'];
-
-                    $this->Commonmodel->insert_record($detail_data, 'saimtech_inventory_detail');
-
-                    $item_data = array();
-                    $item_data['purchasePrice'] = $detail_data['purchase_price'];
-                    $item_data['salePrice'] = $detail_data['sale_price'];
-                    $item_data['qty'] = $item->qty +  $detail_data['inventory_qty'];
-                    $this->Commonmodel->update_record($item_data,array('itemsId' => $item_id), 'saimtech_items');
-                }
-
-                
-
-                session()->setFlashdata('message', 'Inventory added successfully.');
-                return redirect()->to('/inventory/detail/'.$inventory_id.'/');
-            }
-
-        } else {
-            // ddd(inventory_code());
-            $data['title'] = 'Add Inventory';
-            $data['inventory_active'] = 'active';
-            // $data['inventory'] ="nav-expanded nav-active";
-            // $data['category'] ="nav-active";
-
-            $data['items'] = $items = $this->Commonmodel->getRows(array('conditions' => array('itemActive' => 1)), 'saimtech_items');
-
-            $data['main_content'] = 'inventory/add_inventory';
-            return view('layouts/page',$data);  
-        }
-    }
-
-
-    public function detail($inventory_id){
-        $data['title'] = 'Inventory Detail';
-        $data['main_content'] = 'inventory/detail';
-        $data['inventory_id'] = $inventory_id;
-
-        //Inventory in parent line
-        $row = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('inventory_id' => $inventory_id)), 'saimtech_inventory');
-        if($row) {
-            $details = $this->Accountsmodel->get_inv_detail($inventory_id);
-            if($details) {
-                $data['items'] = $items = $this->Commonmodel->getRows(array('conditions' => array('itemActive' => 1)), 'saimtech_items');
-                $data['inventory_code'] = $row->inventory_code;
-                $data['inventory_desc'] = $row->inventory_desc;
-                $data['inventory_date'] = date('d-m-Y',strtotime($row->inventory_date));
-                $data['details'] = $details;
-            } else {
-                session()->setFlashdata('message', 'Not Found!');
-                session()->setFlashdata('message_type', 'error');
-                return redirect()->to('/inventory');
-            }
-
-        } else {
-            session()->setFlashdata('message', 'Not Found!');
-            session()->setFlashdata('message_type', 'error');
-            return redirect()->to('/inventory');
-        }
-
-        return view('layouts/page',$data);
-    
-    }
-
-    public function delete_detail_row() {
-        $inventory_detail_id = $this->request->getVar('inventory_detail_id');
-
-        $detail = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('inventory_detail_id' => $inventory_detail_id)), 'saimtech_inventory_detail');
-
-        $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $detail->item_id)), 'saimtech_items');
-
-        $update_item['qty'] = $item->qty - $detail->inventory_qty;
-        $this->Commonmodel->update_record($update_item,array('itemsId' => $item->itemsId), 'saimtech_items');
-
-        $this->Commonmodel->Delete_record('saimtech_inventory_detail', 'inventory_detail_id', $inventory_detail_id);
-
-        $result = array('success' =>  true);
-        return $this->response->setJSON($result);
-
-    }
-
-    public function item_inv_detail($item_id){
-        $data['title'] = 'Item Inventory Detail';
-        $data['main_content'] = 'inventory/item_inv_detail';
-        $data['item_id'] = $item_id;
-
-        //Inventory in parent line
-        $row = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $item_id)), 'saimtech_items');
-        if($row) {
-            $data['img'] = IMGURL.$row->img;
-            $data['item_name'] = $row->itemName;
-            $data['item'] = $row;
-
-            $data['barcode'] = $row->barcode;
-
-            $link = LIVE_URL.'pdf/' . $row->barcode . '.png';
-
-
-            $headers = @get_headers($link);
-            if ($headers && strpos($headers[0], '200') !== false) {
-                
-            } else {
-                $this->Commonmodel->generateProductBarcode($row->barcode);
-            }
-            // ddd($row);
-
-        } else {
-            session()->setFlashdata('message', 'Not Found!');
-            session()->setFlashdata('message_type', 'error');
-            return redirect()->to('/inventory');
-        }
-
-        return view('layouts/page',$data);
-    
-    }
-    public function itemInvDetailList(){
-        // dd($_POST);
-        $limit = $this->request->getVar('length');
-        $start = $this->request->getVar('start');
-        $search = $this->request->getVar('search');
-        $item_id = $this->request->getVar('item_id');
-        // dd($search);
-        $totalData = $this->Accountsmodel->all_inv_detail_count($item_id);
-        $totalFiltered = $totalData;
-
-        if (empty($search)) {
-            $items = $this->Accountsmodel->all_inv_detail($item_id, $limit, $start);
-            // ddd($items);
-        } else {
-            $items =  $this->Accountsmodel->inv_detail_search($item_id, $limit, $start, $search);
-            $totalFiltered = $this->Accountsmodel->inv_detail_search_count($item_id, $search);
-
-        }
-        $data = array();
-        if (!empty($items)) {
-
-            $i = 1;
-            foreach ($items as $row) {   
-                $action = 'N/A';
-                if (in_array('alter_inventory', $_SESSION['permissions'])) {
-                    $action = '<button type="button" class="btn btn-outline-theme me-2 delete" 
-                                        data-inventory_detail_id="'. $row->inventory_detail_id.'"
-                                        style="width: 80px;">Delete</i>
-                                    </button>';
-                }
-
-                $nestedData['sr'] = $i;
-                $nestedData['inventory_code'] = $row->inventory_code;                
-                $nestedData['inventory_qty'] = $row->inventory_qty;                
-                $nestedData['purchase_price'] = $row->purchase_price;                
-                $nestedData['sale_price'] =  $row->sale_price;  
-
-                $nestedData['date'] =  date('d-m-Y h:i A',strtotime($row->created_at));  
-
-                $nestedData['action'] =  $action;  
-
-
-                $data[] = $nestedData;
-
-                $i++;
-            }
-
-        }
-
-        
-
-        $json_data = array(
-            "draw"            => intval($this->request->getVar('draw')),
-            "recordsTotal"    => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data"            => $data
-        );
-
-        echo json_encode($json_data);
-    }
-
-    public function getBarcodeData(){
+    public function add(){
         $result = array('success' =>  false);
-        $item_id = $this->request->getVar('item_id');
-        $barcode = $this->request->getVar('barcode');
-        $data['qty'] = $this->request->getVar('inventory_qty');
 
-        $data['item'] = $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('itemsId' => $item_id)), 'saimtech_items');
-        if ($item) {
-            $html = view('inventory/inv_barcode_data', $data);
-            $result = array('success' =>  true, 'html' => $html);
+        $type = $this->request->getVar('type');
+        $account_name = $this->request->getVar('account_name');
+        $party_id = $this->request->getVar('party_id');
+        $account_type = $this->request->getVar('account_type');
+        $account_desc = $this->request->getVar('account_desc');
+
+        $data = array(
+            'account_name' => $account_name,
+            'party_id' => $party_id,
+            'type' => $account_type,
+            'account_desc' => $account_desc,
+        );
+
+        if ($type == 'add') {
+            $account_exist = $this->Commonmodel->Duplicate_check(array('account_name' => $account_name), 'saimtech_accounts');
+
+            if (!$account_exist) {
+                $this->Commonmodel->insert_record($data, 'saimtech_accounts');
+                $result = array('success' =>  true);
+            } else {
+                $msg = 'This account with name '. $account_name . ' already exist. Please with try diffrent one';
+                $result = array('success' =>  false, 'msg' => $msg);
+            }
+        } else {
+            $account_id = $this->request->getVar('account_id');
+            $account_exist = $this->Commonmodel->Duplicate_check(array('account_name' => $account_name), 'saimtech_accounts', array('account_id' => $account_id));
+
+            if (!$account_exist) {
+                $account_id = $this->request->getVar('account_id');
+                $this->Commonmodel->update_record($data,array('account_id' => $account_id), 'saimtech_accounts');
+                $result = array('success' =>  true);
+            } else {
+                $msg = 'This account with name '. $account_name . ' already exist. Please with try diffrent one';
+                $result = array('success' =>  false, 'msg' => $msg);
+            }
         }
+
+        // echo json_encode($result);
+        // $this->output->set_content_type('application/json')->set_output(json_encode($result));
         return $this->response->setJSON($result);
     }
 
-    public function item_barcode($barcode, $qty = 1){
+    public function statusUpdate(){
+        $account_id = $this->request->getVar('account_id');
+        $is_active = $this->request->getVar('is_active');
 
-        if ($qty > 0 && $qty < 1000 ) {
-            $length = strlen($barcode);
-            $item = $this->Commonmodel->getRows(array('returnType' => 'single', 'conditions' => array('barcode' => $barcode)), 'saimtech_items');
-            if ($item) {
+        $data = array('is_active' => $is_active);
+        $this->Commonmodel->update_record($data, array('account_id' => $account_id), 'saimtech_accounts');
+        $msg = ($is_active) ? 'Account activated successfully!' : 'Account deactivated successfully!'; 
+        $result = array('success' =>  true, 'msg' => $msg);
 
-                $data['item'] = $item;
-                $data['barcode'] = $barcode;
-                $data['qty'] = $qty;
-                return view('item/print_barcode', $data);
-            } else {
-                echo 'Product Barcode Not Found';
-            }
-        } else{
-            echo 'Something went wrong Please try later!';
+        return $this->response->setJSON($result);
+    }
+
+    public function pnl(){
+        $data['title'] = 'PNL';
+        $data['pnl_active'] = 'active';
+        $data['main_content'] = 'accounts/pnl';
+
+        $start_date = $end_date = $pnl_data  = $data['items_data'] =  '';
+        if (isset($_POST) && !empty($_POST)) {
+            $start_date = date('Y-m-d',strtotime($this->request->getVar('start_date')));
+            $end_date = date('Y-m-d',strtotime($this->request->getVar('end_date')));
+            $expense_data = $this->Accountsmodel->getExpenseByDate($start_date, $end_date);
+            $data['expense_data'] = $expense_data;
+            $items_data = $this->Accountsmodel->getItemSaleByDate($start_date, $end_date);
+            $data['items_data'] = $items_data;
+
+            $start_date = date('d-m-Y',strtotime($start_date));
+            $end_date = date('d-m-Y',strtotime($end_date));
+
         }
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+
+        return view('layouts/page',$data);
     }
 }

@@ -18,6 +18,9 @@ tr.child li {
 .img-circle {
     border-radius: 50%;
 }
+.page-header {
+    font-size: 1.5rem !important;
+}
 
 .product-img-preview {
     border: 0.3px solid #c7c3c3 !important;
@@ -94,10 +97,96 @@ tr.child li {
 tr td {
     vertical-align: middle;
 }
+
+
+.tt-menu {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1050;
+}
+
+.tt-suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.tt-suggestion:hover {
+    background-color: #f8f9fa;
+}
+
+/* Prevent Typeahead from shrinking the input width */
+.typeahead, .tt-input {
+    width: 760px; /* Ensures the input takes up the full parent width */
+}
+
+.tt-suggestion {
+    border-bottom: 1px solid #ededed;
+}
+.tt-no-result {
+    padding: 10px;
+    color: #999;
+    text-align: center;
+    font-style: italic;
+}
+.tt-highlight{
+    font-weight: 700;
+}
+
+.tt-cursor {
+    background-color: #e9ecef; /* Highlight color */
+    cursor: pointer;
+}
+.app-header .menu .menu-search .menu-search-icon {
+    z-index: 1;
+}
+
+/* Custom Scrollbar for WebKit Browsers (Chrome, Edge, Safari) */
+.tt-menu::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+    height: 12px; /* Height of the horizontal scrollbar */
+}
+
+.tt-menu::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background color of the track */
+    border-radius: 10px; /* Rounded corners for the track */
+}
+
+.tt-menu::-webkit-scrollbar-thumb {
+    background: #ccc; /* Thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+    border: 3px solid #f1f1f1; /* Adds padding and makes the thumb smaller */
+}
+
+.tt-menu::-webkit-scrollbar-thumb:hover {
+    background: #999; /* Darker thumb color on hover */
+}
+
+/* Custom Scrollbar for Firefox */
+.tt-menu {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #ccc #f1f1f1; /* Thumb and track colors */
+}
+
+/* Rounded effect for Firefox (if applicable) */
+.tt-menu * {
+    scrollbar-width: thin; /* Ensures children inherit the same scrollbar */
+    scrollbar-color: #ccc #f1f1f1;
+}
+
+
 /*@media (min-width: 1200px) and (max-width: 1700px) { */
 @media (min-width: 1200px) { 
     .main-row {
         width: 100% !important;
+    }
+}
+@media only screen and (max-width: 1200px) { 
+    .typeahead, .tt-input {
+        width: 100% !important; /* Ensures the input takes up the full parent width */
     }
 }
 @media only screen and (max-width: 425px) { 

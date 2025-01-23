@@ -48,7 +48,7 @@
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1">
                                         <h5 class="mb-1">Accounts</h5>
-                                        <div>Facebook page stats overview</div>
+                                        <div>Pending payable and receivable</div>
                                     </div>
                                     <a href="javascript:;" class="text-secondary"><i class="fa fa-redo"></i></a>
                                 </div>
@@ -58,9 +58,10 @@
                                     <!-- BEGIN col-6 -->
                                     <div class="col-6 text-center">
                                         <div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center mb-2 ms-auto me-auto">
-                                            <i class="fa fa-thumbs-up fa-lg text-primary"></i>
+                                            <i class="far fa-lg fa-money-bill-alt text-primary"></i>
+                                            <!-- <i class="fa fa-thumbs-up fa-lg text-primary"></i> -->
                                         </div>
-                                        <div class="fw-600 text-body">306.5k</div>
+                                        <div class="fw-600 text-body"><?= $account['payable'] ?></div>
                                         <div class="fs-13px">Payable</div>
                                     </div>
                                     <!-- END col-6 -->
@@ -68,9 +69,9 @@
                                     <!-- BEGIN col-6 -->
                                     <div class="col-6 text-center">
                                         <div class="w-50px h-50px bg-primary bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center mb-2 ms-auto me-auto">
-                                            <i class="fa fa-comments fa-lg text-primary"></i>
+                                            <i class="far fa-lg fa-money-bill-alt text-primary"></i>
                                         </div>
-                                        <div class="fw-600 text-body">27.5k</div>
+                                        <div class="fw-600 text-body"><?= $account['receivable'] ?></div>
                                         <div class="fs-13px">Recievable</div>
                                     </div>
                                     <!-- END col-6 -->

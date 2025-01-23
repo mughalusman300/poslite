@@ -19,28 +19,38 @@
         <div class="card">
             <div class="card-body">
                 <!-- <form id="sales" action="<?=URL?>/sales" method="POST" class="sales"> -->
-                    <div class="row">
+                    <div class="row mb-5" class="sales" id="sales">
                         <div class="col-md-4">
                             <label for="title" class="form-label">Start Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input start_date" placeholder="dd-mm-yyyy" id="start_date" value="<?= $start_date ?>" name="start_date" >
+
+                            <!-- <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required=""> -->
                         </div>
 
                         <div class="col-md-4">
                             <label for="title" class="form-label">End Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input end_date" placeholder="dd-mm-yyyy" id="end_date" value="<?= $end_date ?>" name="end_date" >
+
+                            <!-- <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required=""> -->
+                        </div>
+
+                        <div class="col-md-2" style="display: grid;">
+                            <label for="title" style="visibility: hidden;" class="form-label">Generate </label>
+
+                            <button type="button" class="btn btn-outline-theme me-2 generate_sales">Generate Report</button>
                         </div>
                     </div>
-                    <div class="row mb-4">
+                    <!-- <div class="row mb-4">
                         <div class="offset-md-9 col-md-3 text-end">
                             <button type="button" class="btn btn-outline-theme me-2 generate_sales">Generate Sale</button>
                         </div>
-                    </div>
+                    </div> -->
                 <!-- </form> -->
                 
                 <table id="sales_table" class="table text-nowrap w-100">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <!-- <th>#</th> -->
                             <th>Invoice #</th>
                             <th>Date</th>
                             <!-- <th>Invoice Price</th> -->

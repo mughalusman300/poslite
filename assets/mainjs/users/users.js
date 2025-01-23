@@ -136,6 +136,7 @@ $(document).ready(function(){
 	$('.users-modal').on('hidden.bs.modal', function (e) {
 		$('.users-modal').find('.modal-title').text('Add User');
 	    $('.users-modal').find('input[type="text"]').val('');
+	    $('.users-modal').find('input[type="password"]').val('');
 	    $('.users-modal').find('input').removeClass('is-invalid');
 	    $('.users-modal').find('select').val('');
 	    $('.users-modal').find('select').removeClass('is-invalid');

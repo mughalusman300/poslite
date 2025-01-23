@@ -21,7 +21,9 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Login');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override();
+// $routes->set404Override();
+// $routes->set404Override('\App\Controllers\Login::unauthorized');;
+
 $routes->setAutoRoute(true);
 
 /*
@@ -90,7 +92,7 @@ $routes->post('createDesignation', 'Designation::store');
 $routes->get('searchDesignation', 'Designation::search');
 
 ////////////////Noauthorized Routes///////////////////////
-$routes->get('/unauthorized', 'User::unauthorized');
+$routes->get('/unauthorized', 'login::unauthorized');
 
 /*
  * --------------------------------------------------------------------

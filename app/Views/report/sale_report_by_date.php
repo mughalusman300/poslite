@@ -22,19 +22,26 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="title" class="form-label">Start Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input start_date" placeholder="dd-mm-yyyy" id="start_date" value="<?= $start_date ?>" name="start_date" >
+                            <!-- <input type="date" class="form-control validate-input start_date" id="start_date" name="start_date" value="<?= $start_date ?>" required=""> -->
                         </div>
 
                         <div class="col-md-4">
                             <label for="title" class="form-label">End Date</label> <span class="color-red">*</span>
-                            <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required="">
+                            <input type="text" readonly="" class="form-control validate-input end_date" placeholder="dd-mm-yyyy" id="end_date" value="<?= $end_date ?>" name="end_date" >
+                            <!-- <input type="date" class="form-control validate-input end_date" id="end_date" name="end_date" value="<?= $end_date ?>" required=""> -->
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-9 col-md-3 text-end">
+                        <div class="col-md-2" style="display: grid;">
+                            <label for="title" style="visibility: hidden;" class="form-label">Generate </label>
+
                             <button type="button" class="btn btn-outline-theme me-2 generate_report">Generate Report</button>
                         </div>
                     </div>
+                    <!-- <div class="row">
+                        <div class="offset-md-9 col-md-3 text-end">
+                            <button type="button" class="btn btn-outline-theme me-2 generate_report">Generate Report</button>
+                        </div>
+                    </div> -->
                 </form>
                 <?php if(isset($report_data)) { 
                         $i= 1;

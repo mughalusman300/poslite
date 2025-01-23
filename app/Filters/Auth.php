@@ -11,8 +11,9 @@ class Auth implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = \Config\Services::session();
-
-        if(!isset($_SESSION['user_id'])){
+        $session->set('redirect_url', current_url());
+        
+        if (!isset($_SESSION['user_id'])){
         	return redirect()->to('/Login');
         }
         if (isset($_SESSION['permissions']) && !empty($_SESSION['permissions'])) {
@@ -23,7 +24,7 @@ class Auth implements FilterInterface
             $controllerFullName = $router->controllerName();
 
             $controller = strtolower(substr(strrchr($controllerFullName, "\\"), 1));
-            if ($controller == 'item' || $controller == 'dashboard' || $controller == 'sales' || $controller == 'expense' || $controller == 'category' || $controller == 'accounts') {
+            if ($controller == 'item' || $controller == 'dashboard' || $controller == 'sales' || $controller == 'expense' || $controller == 'category' || $controller == 'accounts' || $controller == 'payable' || $controller == 'receivable' || $controller == 'pnl') {
                 if(!in_array('view_'.$controller, $permissions)) {
                     // print_r($permissions);die;
                     return redirect()->to('/unauthorized');

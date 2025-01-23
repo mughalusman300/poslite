@@ -47,8 +47,11 @@
     <!-- ================== END core-js ================== -->
     
     <!-- ================== BEGIN page-js ================== -->
-    <script src="<?= URL ?>/assets/plugins/apexcharts/dist/apexcharts.js"></script>
-    <script src="<?= URL ?>/assets/js/demo/dashboard.demo.js"></script>
+    <?php if(in_array($main_content, array('dashboard'))) { ?>
+        <script src="<?= URL ?>/assets/plugins/apexcharts/dist/apexcharts.js"></script>
+        <script src="<?= URL ?>/assets/js/demo/dashboard.demo.js"></script>
+
+    <?php } ?>
 
     <script src="<?= URL ?>/assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?= URL ?>/assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
@@ -110,6 +113,9 @@
             </script>
     <?php } ?> 
 
-    <?php if (in_array($main_content, array('category/category')) || in_array($main_content, array('product/product')) || in_array($main_content, array('product/addProduct')) || in_array($main_content, array('product/updateProduct')) || in_array($main_content, array('uom')) || in_array($main_content, array('variant/variant')) || in_array($main_content, array('variant/detail')) || in_array($main_content, array('group/group')) || in_array($main_content, array('location/location')) || in_array($main_content, array('inventory/inventoryin')) || in_array($main_content, array('inventory/inventory')) || in_array($main_content, array('inventory/inv_detail')) || in_array($main_content, array('store/store')) || in_array($main_content, array('item/item')) || in_array($main_content, array('users/users')) || in_array($main_content, array('report/sale_report_by_date')) || in_array($main_content, array('report/sale_report_by_category')) || in_array($main_content, array('report/sale_report_by_payment')) || in_array($main_content, array('sales/sales')) || in_array($main_content, array('expense/expense_header'))  || in_array($main_content, array('expense/payment_mode')) || in_array($main_content, array('expense/party')) || in_array($main_content, array('expense/expense')) || in_array($main_content, array('expense/add_expense')) || in_array($main_content, array('expense/expense_detail')) || in_array($main_content, array('inventory/add_inventory')) || in_array($main_content, array('inventory/item_inv_detail')) || in_array($main_content, array('inventory/detail')) || in_array($main_content, array('dashboard')) ) { ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.3.1/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="<?=URL?>/assets/mainjs/header.js<?= version ?>"></script>
+
+    <?php if (in_array($main_content, array('category/category')) || in_array($main_content, array('product/product')) || in_array($main_content, array('product/addProduct')) || in_array($main_content, array('product/updateProduct')) || in_array($main_content, array('uom')) || in_array($main_content, array('variant/variant')) || in_array($main_content, array('variant/detail')) || in_array($main_content, array('group/group')) || in_array($main_content, array('location/location')) || in_array($main_content, array('inventory/inventoryin')) || in_array($main_content, array('inventory/inventory')) || in_array($main_content, array('inventory/inv_detail')) || in_array($main_content, array('store/store')) || in_array($main_content, array('item/item')) || in_array($main_content, array('users/users')) || in_array($main_content, array('report/sale_report_by_date')) || in_array($main_content, array('report/sale_report_by_category')) || in_array($main_content, array('report/sale_report_by_payment')) || in_array($main_content, array('sales/sales')) || in_array($main_content, array('expense/expense_header'))  || in_array($main_content, array('expense/payment_mode')) || in_array($main_content, array('expense/party')) || in_array($main_content, array('expense/expense')) || in_array($main_content, array('expense/add_expense')) || in_array($main_content, array('expense/expense_detail')) || in_array($main_content, array('inventory/add_inventory')) || in_array($main_content, array('inventory/item_inv_detail')) || in_array($main_content, array('inventory/detail')) || in_array($main_content, array('dashboard')) || in_array($main_content, array('accounts/accounts')) || in_array($main_content, array('accounts/pnl')) || in_array($main_content, array('payable/payable')) || in_array($main_content, array('payable/pay')) || in_array($main_content, array('payable/lock')) || in_array($main_content, array('receivable/receivable')) || in_array($main_content, array('receivable/pay')) || in_array($main_content, array('receivable/lock')) ) { ?>
         <script type="text/javascript" src="<?=URL?>/assets/mainjs/<?= $main_content?>.js<?= version ?>"></script>
     <?php } ?>

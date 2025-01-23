@@ -20,8 +20,9 @@ class Sales extends BaseController
     public function index(){
         $data['title'] = 'Sales';
         $data['sales_active'] = 'active';
-        $start_date = date('Y-m-d');
-        $end_date = date('Y-m-d');
+        $start_date = date('d-m-Y'); // Current date
+        $start_date = date('d-m-Y', strtotime('-7 days', strtotime($start_date)));
+        $end_date = date('d-m-Y');
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
         $data['main_content'] = 'sales/sales';
@@ -29,8 +30,8 @@ class Sales extends BaseController
     }
 
     public function saleList(){
-        $start_date = $this->request->getVar('start_date');
-        $end_date = $this->request->getVar('end_date');
+        $start_date = date('Y-m-d', strtotime($this->request->getVar('start_date')));
+        $end_date = date('Y-m-d', strtotime($this->request->getVar('end_date')));
 
         $limit = $this->request->getVar('length');
         $start = $this->request->getVar('start');

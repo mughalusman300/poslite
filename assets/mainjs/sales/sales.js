@@ -1,4 +1,28 @@
 $(document).ready(function(){
+
+	date_initialize();
+	function date_initialize(){
+	    // Define the current date
+	    const now = new Date();
+
+		$('.start_date').datepicker({
+	        format: 'dd-mm-yyyy',  // Date format (you can adjust this)
+	        todayHighlight: true,  // Highlight today's date
+	        autoclose: true,       // Close the datepicker after selecting a date
+	    });
+
+    	$('.end_date').datepicker({
+            format: 'dd-mm-yyyy',  // Date format (you can adjust this)
+            todayHighlight: true,  // Highlight today's date
+            autoclose: true,       // Close the datepicker after selecting a date
+        });
+
+		// On focus (click) on the input, reset the calendar to the current month
+	    // $('.start_date').on('focus', function() {
+	    //     $(this).datepicker('setStartDate', new Date(now.getFullYear(), now.getMonth(), 1)); // Reset to current month          
+	    // });
+	}
+
 	var table;
 	saleList();
 
@@ -27,7 +51,7 @@ $(document).ready(function(){
 		     	"type": "POST",
 		    },
 	    	"columns": [
-		        { "data": "sr" },
+		        // { "data": "sr" },
 		        { "data": "invoice_code" },
 		        { "data": "invoice_date" },
 		        { "data": "invoice_discount" },
@@ -42,7 +66,7 @@ $(document).ready(function(){
 	        	{ targets: 3, width: '200px' },
 	        	{ targets: 4, width: '200px' },
 	        	{ targets: 5, width: '200px' },
-	        	{ targets: 6, width: '200px' },
+	        	// { targets: 6, width: '200px' },
 	        ]
 	    });
 	}

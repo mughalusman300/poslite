@@ -28,16 +28,16 @@
 								</select>
 							</div>
 							<div class="col-md-6 mb-3">
-								<label for="password" class="form-label">Password</label> <span class="color-red">*</span>
-								<input type="password" autocomplete="false" class="form-control validate-input password" placeholder="Password" id="password" value="" required="">
+								<label for="password" class="form-label">Password</label> <!-- <span class="color-red">*</span> -->
+								<input type="password" autocomplete="new-password" class="form-control password" placeholder="Password" id="password" value="" required="">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12" style="display: flex; justify-content: space-between;">
-								<b>Permissions</b>
+								<b style="font-weight: 700; font-size: 16px;">Permissions</b>
 								<div class="form-check form-switch">
 		                            <input type="checkbox" class="form-check-input allow_all_permissions" value="allow_all_permissions">
-		                            <label class="form-check-label" for="customSwitch2">Allow All Permissions</label>
+		                            <label class="form-check-label text-theme" for="customSwitch2" style="font-weight: 700; font-size: 16px;">Allow All Permissions</label>
 		                        </div>
 							</div>
 						</div>
@@ -183,7 +183,7 @@
 									</div>
 									<div class="col-md-4">
 										<div class="form-check form-switch">
-				                            <input type="checkbox" class="form-check-input" name="permissions[]" value="alter_expense">
+				                            <input type="checkbox" class="form-check-input" name="permissions[]" value="\">
 				                            <label class="form-check-label" for="customSwitch2"></label>
 				                        </div>
 									</div>
@@ -234,7 +234,7 @@
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-4" style="font-weight: 600">
-										Sales Report
+										Sales Reports
 									</div>
 									<div class="col-md-4">
 										<div class="form-check form-switch">
@@ -270,7 +270,151 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Payable
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_payable">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin"  name="permissions[]" value="alter_payable">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Payable (Pay)
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_payable_pay">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="alter_payable_pay">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Payable (Lock)
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_payable_lock">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin"  name="permissions[]" value="alter_payable_lock">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Receivable
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_receivable">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="alter_receivable">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Receivable (Pay)
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_receivable_pay">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin"  name="permissions[]" value="alter_receivable_pay">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										Receivable (Lock)
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_receivable_lock">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="alter_receivable_lock">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4" style="font-weight: 600">
+										PNL
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="view_pnl">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-check form-switch">
+				                            <input type="checkbox" class="form-check-input admin" name="permissions[]" value="alter_pnl">
+				                            <label class="form-check-label" for="customSwitch2"></label>
+				                        </div>
+									</div>
+								</div>
+							</div>
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-4" style="font-weight: 600">
@@ -289,8 +433,6 @@
 				                        </div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
 							</div>
 						</div>
 

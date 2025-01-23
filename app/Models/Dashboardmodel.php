@@ -1,6 +1,8 @@
 <?php
  namespace App\Models;
  use CodeIgniter\Model;
+ use App\Models\Payablemodel;
+ use App\Models\Receivablemodel;
  class Dashboardmodel extends Model {
 
      public function __construct() { 
@@ -130,6 +132,53 @@
         return $weekly_sales;
     }
 
+    public function account() {
+        $this->Payablemodel = new Payablemodel();
+        $payable = $this->Payablemodel->all_payable(-1, 0, 'Pending');
+        $total_payable_pending  = $total_receivable_pending = 0;
+        if (!empty($payable)) {
+
+            foreach ($payable as $row) {
+                $pending_amount = $row->amount;
+                $paid = $this->Payablemodel->get_paid($row->payable_id);
+                if ($paid) {
+                    $total_paid = 0;
+                    foreach ($paid as $line) {
+                        if ($line->is_lock) {
+                            $total_paid += $line->payable_detail_amount;
+                        }
+                    }
+                    $pending_amount = $row->amount - $total_paid;
+                }
+
+                $total_payable_pending += $pending_amount;
+            }
+        }
+
+        $this->Receivablemodel = new Receivablemodel();
+        $receivable = $this->Receivablemodel->all_receivable(-1, 0, 'Pending');
+
+        if (!empty($receivable)) {
+
+            foreach ($receivable as $row) {
+                $pending_amount = $row->amount;
+                $paid = $this->Receivablemodel->get_paid($row->receivable_id);
+                if ($paid) {
+                    $total_paid = 0;
+                    foreach ($paid as $line) {
+                        if ($line->is_lock) {
+                            $total_paid += $line->receivable_detail_amount;
+                        }
+                    }
+                    $pending_amount = $row->amount - $total_paid;
+                }
+
+                $total_receivable_pending += $pending_amount;
+            }
+        }
+        
+        return array('payable' => number_format($total_payable_pending, 2), 'receivable' => number_format($total_receivable_pending, 2));
+    }
 
 
  }

@@ -11,12 +11,12 @@ $(document).ready(function(){
         todayHighlight: true,  // Highlight today's date
         autoclose: true,       // Close the datepicker after selecting a date
     });
-
-	$(document).on('click', '.generate_report', function(){
-		var validate = checkValidation('#report');
-		if (validate) {
-			$('#report').submit();
-		}
-	});
+	    
+    $(document).on('click', '.generate_report', function(){
+        var validate = checkValidation('#report');
+        if (validate) {
+            $('#report').submit();
+        }
+    });
 
 });

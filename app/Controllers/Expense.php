@@ -72,6 +72,12 @@ class Expense extends BaseController
                     if (in_array('alter_expense', $_SESSION['permissions'])){
                         $action .= ' <a href="'.URL.'/expense/detail/approve/'.$row->id.'" class="btn btn-outline-theme view-expense">Approve</a>';
                     }
+                    if (in_array('alter_expense', $_SESSION['permissions'])){
+                        $action .= '<button class="btn ms-2 btn-outline-danger delete"
+                            data-expense_id="'.$row->id.'"
+                            > Delete</button>
+                        ';
+                    }
                 }
                 if (!in_array('view_expense', $_SESSION['permissions'])){
                     $action = 'N/A';
@@ -623,5 +629,16 @@ class Expense extends BaseController
         $result = array('success' =>  true, 'msg' => $msg);
 
         return $this->response->setJSON($result);
+    }
+
+    public function delete() {
+        $expense_id = $this->request->getVar('expense_id');
+
+        $this->Commonmodel->Delete_record('saimtech_expense', 'id', $expense_id);
+        $this->Commonmodel->Delete_record('saimtech_expense_detail', 'expense_id', $expense_id);
+
+        $result = array('success' =>  true);
+        return $this->response->setJSON($result);
+
     }
 }

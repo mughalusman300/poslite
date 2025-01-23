@@ -34,8 +34,18 @@ class Login extends BaseController
     				$_SESSION['user_id']    = $user->id;
     				$_SESSION['user_name']  = $user->name;
                     $_SESSION['user_power']  = $user->power;
-    				$_SESSION['permissions']  = (!empty($user->permissions)) ? (explode(',', $user->permissions)): '';
-    				return redirect()->to('/Item'); 
+    				$_SESSION['permissions'] = $permissions  = (!empty($user->permissions)) ? (explode(',', $user->permissions)): '';
+                    // ddd($_SESSION);
+                    if(isset($_SESSION['redirect_url'])) {
+                        $redirect_url = $_SESSION['redirect_url'];
+                        unset($_SESSION['redirect_url']);
+                        return redirect()->to($redirect_url);
+                    }
+                    if (in_array('view_dashboard', $permissions)) {
+        				return redirect()->to('/dashboard'); 
+                    } else {
+                        return redirect()->to('/item');
+                    }
     			} else {
     				$data['error'] ='Invalid password';
     		        return view('users/loginView',$data);
@@ -55,4 +65,10 @@ class Login extends BaseController
     	session_destroy();
     	return redirect()->to('/');
     } 
+    public function unauthorized(){
+        $data['title'] = 'unauthorized';
+
+        $data['main_content'] = 'unauthorized';
+        return view('layouts/page',$data);
+    }
 }

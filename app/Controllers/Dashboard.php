@@ -20,6 +20,9 @@ class Dashboard extends BaseController
         $data['error'] = '';    
     	$data['main_content'] = 'dashboard';
 
+        $data['account'] = $this->Dashboardmodel->account();
+        // ddd($data['account']);
+
         $data['items'] = $this->Commonmodel->getRows(array('returnType' => 'count', 'conditions' => array('itemsId >' => 0 )), 'saimtech_items');
 
         $data['sale'] = $this->Dashboardmodel->get_sale();
@@ -39,4 +42,59 @@ class Dashboard extends BaseController
         // Return the data as JSON
         echo json_encode($sales_data);
     }
+
+    public function search() {
+        $search = $this->request->getVar('search');
+        if ($search) {
+            if (stripos($search, 'item') !== false || stripos($search, 'items') !== false) {
+                return redirect()->to('/item');
+            } else if(stripos($search, 'dashboard') !== false) {
+                return redirect()->to('/dashboard');
+            } else if(stripos($search, 'dashboard') !== false) {
+                return redirect()->to('/dashboard');
+            }
+        }
+    }
+
+    // public function suggestions() {
+    //         $query = $this->request->getGet('q'); // Get the search query
+    //         // ddd($query);
+    //         $results = []; // Fetch data from your database or source
+
+    //         // Example: Query your database (adjust as needed)
+    //         if ($query) {
+    //             $db = \Config\Database::connect();
+    //             $builder = $db->table('menu_links');
+    //             $builder->like('name', $query);
+    //             $queryResult = $builder->get();
+
+    //             foreach ($queryResult->getResult() as $row) {
+    //                 $results[] = ['name' => $row->name, 'url' => URL.$row->url ]; // Adjust the structure as needed
+    //             }
+    //         }
+
+    //         return $this->response->setJSON($results);
+    // }
+
+    public function suggestions() {
+        $query = $this->request->getGet('q'); // Get the search query
+        $results = []; // Initialize results array
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('menu_links');
+
+        // Check if the query exists, otherwise fetch all records
+        if ($query) {
+            $builder->like('name', $query);
+        }
+
+        $queryResult = $builder->get();
+
+        foreach ($queryResult->getResult() as $row) {
+            $results[] = ['name' => $row->name, 'url' => URL . $row->url]; // Adjust the structure as needed
+        }
+
+        return $this->response->setJSON($results);
+    }
+
 }

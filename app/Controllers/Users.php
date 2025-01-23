@@ -108,9 +108,13 @@ class Users extends BaseController
             'name' => $name,
             'email' => $email,
             'power' => $power,
-            'password' => $password,
+            // 'password' => $password,
             'permissions' => $permissions,
         );
+
+        if($this->request->getVar('password') != '') {
+            $data['password'] = $password;
+        }
 
         if ($type == 'add') {
             $user_exist = $this->Commonmodel->Duplicate_check(array('email' => $email), 'saimtech_users');

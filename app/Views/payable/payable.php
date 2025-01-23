@@ -7,9 +7,9 @@
 	</ul>
 	
 	<h1 class="page-header d-flex justify-content-between">
-		Account List 
-		<?php if (in_array('alter_accounts', $_SESSION['permissions'])):?>
-			<button type="button" class="btn btn-outline-theme me-2 add-account">Add Account</button>
+		<?= ($status == 'Completed') ? 'Completed' : '';?> Payable List 
+		<?php if (in_array('alter_payable', $_SESSION['permissions']) && $status != 'Completed'):?>
+			<button type="button" class="btn btn-outline-theme me-2 add-payable">Add Payable</button>
 		<?php endif; ?>
 
 		<!-- <a type="button" href="<?= URL?>/product/add" class="btn btn-outline-theme me-2 add-product">Inventory List</a> -->
@@ -36,14 +36,33 @@
 	<div id="datatable" class="mb-5">
 		<div class="card">
 			<ul class="nav nav-tabs nav-tabs-v2 px-4">
-				<li class="nav-item me-3"><a href="#allTab" class="nav-link active px-2" data-bs-toggle="tab">All</a></li>
+				<li class="nav-item me-3" style="    
+					display: flex;
+    				width: 100%;
+    				justify-content: space-between;"
+    			>
+					<a href="#allTab" class="nav-link active px-2" data-bs-toggle="tab">All</a>
+					<?php if ($status != 'Completed'){ ?>
+						<a type="button" href="<?= URL?>/payable/Completed" class="btn btn-outline-theme " style="
+						    height: fit-content;
+						    margin-top: 10px;
+						    margin-right: -18px;
+						"><i class="fas fa-fw fa-arrow-right"> </i> Completed</a>
+					<?php } else { ?>
+						<a type="button" href="<?= URL?>/payable" class="btn btn-outline-theme " style="
+						    height: fit-content;
+						    margin-top: 10px;
+						    margin-right: -18px;
+						"><i class="fas fa-fw fa-arrow-left"> </i>Go Back</a>
+					<?php } ?>
+				</li>
 				<!-- <li class="nav-item me-3"><a href="#deletedTab" class="nav-link px-2" data-bs-toggle="tab">Deleted</a></li> -->
 			</ul>
 			<div class="tab-content p-4">
 				<div class="tab-pane fade show active" id="allTab">
 					<!-- BEGIN input-group -->
 					<div class="input-group mb-4">
-						<button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter Accounts &nbsp;</button>
+						<button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter Payable &nbsp;</button>
 						<div class="dropdown-menu d-none">
 							<a class="dropdown-item" href="#">Action</a>
 							<a class="dropdown-item" href="#">Another action</a>
@@ -64,15 +83,16 @@
 					
 					<!-- BEGIN table -->
 					<div class="table-responsive">
-						<table id="accounts" class="table text-nowrap w-100">
+						<table id="payable" class="table text-nowrap w-100">
 							<thead class="w-100">
 								<tr>
 									<th>Account Name</th>
-									<th>Type</th>
-									<th>Party</th>
+									<th>Amount</th>
+									<th>Paid</th>
+									<th>Pending</th>
 									<th>Description</th>
+									<th>Added By</th>
 									<th>Status</th>
-									<th>Added Date</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -86,7 +106,10 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" class="status" value="<?= $status?>">
 	<!-- END #datatable -->
 </div>
 
-<?php include(APPPATH . 'Views/modals/accounts-modal.php') ?>
+<?php if ($status != 'Completed'){
+	include(APPPATH . 'Views/modals/payable-modal.php') ;
+ }?>
